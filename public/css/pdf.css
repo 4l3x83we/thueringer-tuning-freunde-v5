@@ -1,0 +1,51 @@
+@page {
+    margin: 0 0;
+}
+
+table {
+    width: 100%;
+    /*page-break-before: always;*/
+}
+
+table td {
+    vertical-align: top;
+}
+
+
+/** Define now the real margins of every page in the PDF **/
+body {
+    margin: 3.5cm 1cm 2cm 2cm;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+/** Define the header rules **/
+header {
+    position: fixed;
+    top: 0.5cm;
+    left: 1.5cm;
+    right: 1cm;
+    height: 3cm;
+    /** Extra personal styles **/
+    background-color: white;
+    color: black;
+    line-height: 1.5cm;
+}
+
+/** Define the footer rules **/
+footer {
+    position: fixed;
+    bottom: 0cm;
+    left: 1.85cm;
+    right: 1cm;
+    height: 2cm;
+
+    /** Extra personal styles **/
+    background-color: white;
+    color: black;
+    line-height: 1.5cm;
+}
+footer .pagenum:before {
+    content: counter(page);
+}

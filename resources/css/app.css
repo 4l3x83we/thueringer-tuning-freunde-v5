@@ -1,0 +1,194 @@
+@import url(https://fonts.bunny.net/css?family=gluten:100,200,300,400,500,600,700,800,900|nunito:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i||racing-sans-one:400);
+@import "swiper/css/bundle";
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
+
+.racingSans {
+    font-family: 'Racing Sans One', display;
+}
+
+.gluten {
+    font-family: 'Gluten', display;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Gluten', display;
+}
+
+.scrolled-offset {
+    margin-bottom: 64px;
+}
+
+.dark .tox-tinymce {
+    border: 1px solid rgb(82 82 82) !important;
+    border-radius: 4px !important;
+}
+
+.tox-tinymce {
+    border: 1px solid rgb(212 212 212) !important;
+    border-radius: 4px !important;
+}
+
+.mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
+    color: #a3a3a3 !important;
+}
+
+.dark .tox .tox-edit-area__iframe {
+    background-color: #a3a3a3 !important;
+}
+
+.trennung {
+    hyphens: auto;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+    @apply hover:text-primary-500;
+}
+
+#gaestebuch h1 {
+    @apply text-5xl
+}
+
+#gaestebuch h2 {
+    @apply text-4xl
+}
+
+#gaestebuch h3 {
+    @apply text-3xl
+}
+
+#gaestebuch h4 {
+    @apply text-2xl
+}
+
+#gaestebuch h5 {
+    @apply text-xl
+}
+
+#gaestebuch h6 {
+    @apply text-lg
+}
+
+.tox-tinymce {
+    @apply border border-gray-300 dark:border-gray-600
+}
+
+.tox:not(.tox-tinymce-inline) .tox-editor-header,
+.tox .tox-menubar,
+.tox .tox-toolbar-overlord,
+.tox .tox-toolbar,
+.tox .tox-toolbar__overflow,
+.tox .tox-toolbar__primary,
+.tox.tox-tinymce-aux .tox-toolbar__overflow,
+.tox .tox-statusbar,
+.tox .tox-dialog__header,
+.tox .tox-dialog__content-js,
+.tox .tox-dialog__footer {
+    @apply bg-gray-50 dark:bg-gray-700;
+}
+.tox .tox-mbtn,
+.tox .tox-tbtn svg,
+.tox .tox-collection__item-caret svg,
+.tox .tox-collection__item-accessory,
+.tox .tox-statusbar a,
+.tox .tox-statusbar__path-item,
+.tox .tox-statusbar__wordcount,
+.tox .tox-statusbar__branding svg {
+   @apply text-gray-900 dark:text-white fill-gray-900 dark:fill-white;
+}
+
+.tox .tox-tbtn--bespoke,
+.tox .tox-menu {
+    @apply bg-white dark:bg-gray-500 text-gray-900 dark:text-white;
+}
+
+.tox .tox-collection--list .tox-collection__item--active {
+    @apply bg-gray-100 dark:bg-gray-500 text-gray-900 dark:text-white;
+}
+
+.tox .tox-collection--list .tox-collection__item--enabled {
+    @apply bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white;
+}
+
+.tox .tox-collection__item,
+.tox .tox-dialog__header,
+.tox .tox-dialog__header .tox-button {
+    @apply text-gray-900 dark:text-white
+}
+
+.tox .tox-collection--list .tox-collection__item--active:not(.tox-collection__item--state-disabled) {
+    @apply text-gray-800 dark:text-gray-50
+}
+
+.tox .tox-statusbar a:focus:not(:disabled):not([aria-disabled=true]),
+.tox .tox-statusbar a:hover:not(:disabled):not([aria-disabled=true]),
+.tox .tox-statusbar__path-item:focus:not(:disabled):not([aria-disabled=true]),
+.tox .tox-statusbar__path-item:hover:not(:disabled):not([aria-disabled=true]),
+.tox .tox-statusbar__wordcount:focus:not(:disabled):not([aria-disabled=true]),
+.tox .tox-statusbar__wordcount:hover:not(:disabled):not([aria-disabled=true]),
+.tox .tox-button--naked.tox-button--icon:hover:not(:disabled) {
+    @apply hover:text-gray-800 dark:hover:text-gray-200
+}
+
+.filter-active {
+    @apply rounded border border-primary-700 dark:border-primary-700 text-primary-500 dark:text-primary-500 px-3 py-2 hover:border-0 hover:text-gray-900 hover:dark:text-white focus:ring-0 !important
+}
+
+.filter-inactive {
+    @apply rounded text-gray-900 dark:text-white px-3 py-2 hover:rounded border-0 border-primary-700 hover:border hover:border-primary-700 hover:text-primary-700 hover:dark:text-primary-700 focus:ring-0 !important
+}
+
+.profilText p {
+    @apply my-2
+}
+
+.profilText p:first-child {
+    @apply mt-0
+}
+
+.profilText p:last-child {
+    @apply mb-0
+}
+
+.profilText ul {
+    @apply space-y-1 list-disc list-inside pl-4
+}
+
+.tox .tox-textarea,
+.tox .tox-textarea-wrap .tox-textarea:focus {
+    @apply dark:bg-gray-400 dark:text-black
+}
+
+.fc .fc-toolbar {
+    @apply flex-wrap gap-4
+}
+
+.fc-list-day {
+    @apply dark:text-gray-900;
+}
+
+.fc .fc-list-event:hover td {
+    @apply dark:text-white dark:bg-gray-600;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    @apply dark:text-black dark:bg-gray-400;
+}
+
+.fc .fc-timegrid-col.fc-day-today {
+    @apply dark:bg-gray-400;
+}
+
+.fc-theme-standard .fc-popover-header {
+    @apply dark:bg-gray-400;
+}
+
+.fc .fc-more-popover .fc-popover-body {
+    @apply dark:bg-gray-900;
+}

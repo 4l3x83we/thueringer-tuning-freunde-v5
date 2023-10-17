@@ -1,0 +1,33 @@
+@import url(https://fonts.bunny.net/css?family=gluten:100,200,300,400,500,600,700,800,900);
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Gluten', display;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+    @apply text-5xl
+}
+
+h2 {
+    @apply text-4xl
+}
+
+h3 {
+    @apply text-3xl
+}
+
+h4 {
+    @apply text-2xl
+}
+
+h5 {
+    @apply text-xl
+}
+
+h6 {
+    @apply text-lg
+}
