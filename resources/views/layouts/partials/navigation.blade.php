@@ -93,9 +93,16 @@
                                                 {{ __('Profil') }}
                                             </a>
                                         </li>
+                                        @hasanyrole('member|admin|super_admin')
+                                        <li><a href="{{ route('intern.pdf.geburtstagsliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Geburtstagsliste</a></li>
+                                        <li><a href="{{ route('intern.pdf.telefonliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Telefonliste</a></li>
+                                        <li><a href="{{ route('intern.pdf.satzung') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Satzung</a></li>
+                                        @endhasanyrole
+                                        @hasanyrole('member|admin|super_admin|garage')
                                         <li>
                                             <a href="{{ route('intern.calendar.index') }}" role="menuitem" class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Kalender</a>
                                         </li>
+                                        @endhasanyrole
                                         @hasanyrole('super_admin|admin')
                                             <hr class="my-2 border-primary-500">
                                             <h6 class="px-4 py-2 font-bold cursor-default text-gray-900 dark:text-white">Adminmenü</h6>
@@ -208,7 +215,7 @@
                             <a href="{{ route('frontend.gaestebuch.index') }}"  class="block py-2 pl-3 pr-4 text-sm md:text-base text-gray-900 rounded hover:bg-gray-100 xl:hover:bg-transparent xl:hover:text-primary-700 xl:p-0 dark:text-white xl:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent dark:border-gray-700">Gästebuch</a>
                         @endif
                     </li>
-                    @hasanyrole('member|admin|super_admin')
+                    {{--@hasanyrole('member|admin|super_admin')
                         <li>
                             <div x-data="{ dropdownMenu: false }" class="relative whitespace-nowrap">
                             @if(Request::is('intern*'))
@@ -227,7 +234,7 @@
                             <!-- Dropdown menu -->
                             <div x-show="dropdownMenu" @click.outside="dropdownMenu = false" x-cloak class="z-10 absolute font-normal bg-gray-100 divide-y divide-gray-200 rounded-lg shadow dark:bg-gray-800 dark:divide-gray-600">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-400">
-                                    {{--<li>
+                                    --}}{{--<li>
                                         <a href="{{ route('frontend.fahrzeuge.create') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Neues Fahrzeug anlegen</a>
                                     </li>
                                     <li>
@@ -235,17 +242,17 @@
                                     </li>
                                     <li>
                                         <a href="{{ route('frontend.veranstaltungen.create') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Neue Veranstaltung anlegen</a>
-                                    </li>--}}
+                                    </li>--}}{{--
                                     <h6 class="px-4 py-2 font-bold  text-gray-900 dark:text-white">Interner Bereich</h6>
                                     <li><a href="{{ route('intern.pdf.geburtstagsliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Geburtstagsliste</a></li>
                                     <li><a href="{{ route('intern.pdf.telefonliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Telefonliste</a></li>
-{{--                                    <li><a href="{{ route('intern.calendar.index') }}" class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Kalender</a></li>--}}
+                                    --}}{{--                                    <li><a href="{{ route('intern.calendar.index') }}" class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Kalender</a></li>--}}{{--
                                     <li><a href="{{ route('intern.pdf.satzung') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Satzung</a></li>
                                 </ul>
                             </div>
                             </div>
                         </li>
-                    @endhasanyrole
+                    @endhasanyrole--}}
                 </ul>
             </div>
         </div>

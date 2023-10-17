@@ -114,7 +114,7 @@
             </div>
         @else
             <div class="flex justify-center items-center h-[317px]">
-                <div class="text-xl">Es sind aktuell keine Fahrzeuge vorhanden.</div>
+                <div class="text-xl">Es sind aktuell keine Mitglider vorhanden.</div>
             </div>
         @endif
 

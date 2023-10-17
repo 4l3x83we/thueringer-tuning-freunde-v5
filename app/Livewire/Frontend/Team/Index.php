@@ -13,7 +13,7 @@ class Index extends Component
     public function render()
     {
         metaTags('Hier siehst du eine Übersicht über unsere aktuellen Mitglieder.', 'images/logo.svg', 'Team', 'INDEX,FOLLOW');
-        $teams = Team::where('published', true)->orderBy('slug', 'ASC')->paginate(21);
+        $teams = Team::where('published', true)->where('funktion', '!=', 'Werkstattmieter')->orderBy('slug', 'ASC')->paginate(21);
 
         return view('livewire.frontend.team.index', [
             'teams' => $teams,

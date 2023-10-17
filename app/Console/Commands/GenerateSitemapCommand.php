@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Frontend\Alben\Album;
 use App\Models\Frontend\Fahrzeuge\Fahrzeuge;
-use App\Models\Frontend\Gaestebuch\Gaestebuch;
 use App\Models\Frontend\Team\Team;
 use App\Models\Frontend\Veranstaltungen\Veranstaltungen;
 use Carbon\Carbon;
@@ -29,7 +28,7 @@ class GenerateSitemapCommand extends Command
             ->add(Url::create('/galerie')->setLastModificationDate(Carbon::create(Album::where('updated_at', '<=', now())->first()->updated_at)))
             ->add(Url::create('/veranstaltungen')->setLastModificationDate(Carbon::create(Veranstaltungen::where('updated_at', '<=', now())->first()->updated_at)))
             ->add(Url::create('/kontakt')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))))
-            ->add(Url::create('/gaestebuch')->setLastModificationDate(Carbon::create(Gaestebuch::where('updated_at', '<=', now())->first()->updated_at)))
+            ->add(Url::create('/gaestebuch'))
             ->add(Url::create('/impressum')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))))
             ->add(Url::create('/datenschutz')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))));
 
@@ -38,7 +37,9 @@ class GenerateSitemapCommand extends Command
         }
 
         Team::where('published', true)->get()->each(function (Team $team) use ($sitemap) {
-            $sitemap->add(Url::create("/team/{$team->slug}")->setLastModificationDate(Carbon::create($team->updated_at)));
+            if ($team->funktion !== 'Werkstattmieter') {
+                $sitemap->add(Url::create("/team/{$team->slug}")->setLastModificationDate(Carbon::create($team->updated_at)));
+            }
         });
 
         Fahrzeuge::where('published', true)->get()->each(function (Fahrzeuge $fahrzeuge) use ($sitemap) {
@@ -46,7 +47,9 @@ class GenerateSitemapCommand extends Command
         });
 
         Album::where('published', true)->get()->each(function (Album $galerie) use ($sitemap) {
-            $sitemap->add(Url::create("/galerie/{$galerie->slug}")->setLastModificationDate(Carbon::create($galerie->updated_at)));
+            if ($galerie->kategorie !== 'Fahrzeuge') {
+                $sitemap->add(Url::create("/galerie/{$galerie->slug}")->setLastModificationDate(Carbon::create($galerie->updated_at)));
+            }
         });
 
         $sitemap->writeToFile(public_path('sitemap.xml'));

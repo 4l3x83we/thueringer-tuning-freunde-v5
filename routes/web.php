@@ -56,16 +56,16 @@ Route::name('frontend.')->group(function () {
     //  Team
     Route::get('/team', \App\Livewire\Frontend\Team\Index::class)->name('team.index');
     Route::get('/team/{team}', Show::class)->name('team.show');
-    Route::get('/team/{team}/bearbeiten', Edit::class)->name('team.edit')->middleware(['permission:edit']);
+    Route::get('/team/{team}/bearbeiten', Edit::class)->name('team.edit')->middleware(['role:member|super_admin|admin']);
     //  Fahrzeuge
     Route::get('/fahrzeuge', \App\Livewire\Frontend\Fahrzeuge\Index::class)->name('fahrzeuge.index');
     Route::get('/fahrzeuge/{fahrzeuge}', \App\Livewire\Frontend\Fahrzeuge\Show::class)->name('fahrzeuge.show');
-    Route::get('/fahrzeug/erstellen', Create::class)->name('fahrzeuge.create')->middleware(['permission:write']);
-    Route::get('/fahrzeuge/{fahrzeuge}/bearbeiten', \App\Livewire\Frontend\Fahrzeuge\Edit::class)->name('fahrzeuge.edit')->middleware(['permission:edit']);
+    Route::get('/fahrzeug/erstellen', Create::class)->name('fahrzeuge.create')->middleware(['role:member|super_admin|admin']);
+    Route::get('/fahrzeuge/{fahrzeuge}/bearbeiten', \App\Livewire\Frontend\Fahrzeuge\Edit::class)->name('fahrzeuge.edit')->middleware(['role:member|super_admin|admin']);
     //  Galerie
     Route::get('/galerie', \App\Livewire\Frontend\Galerie\Index::class)->name('galerie.index');
-    Route::get('/galerie/erstellen', \App\Livewire\Frontend\Galerie\Album\Create::class)->name('galerie.album.create')->middleware(['permission:write']);
-    Route::get('/galerie/{galerie}/bearbeiten', \App\Livewire\Frontend\Galerie\Album\Edit::class)->name('galerie.edit')->middleware(['permission:edit']);
+    Route::get('/galerie/erstellen', \App\Livewire\Frontend\Galerie\Album\Create::class)->name('galerie.album.create')->middleware(['role:member|super_admin|admin']);
+    Route::get('/galerie/{galerie}/bearbeiten', \App\Livewire\Frontend\Galerie\Album\Edit::class)->name('galerie.edit')->middleware(['role:member|super_admin|admin']);
     Route::get('/galerie/{galerie}', \App\Livewire\Frontend\Galerie\Show::class)->name('galerie.show');
     //  Veranstaltungen
     Route::get('/veranstaltungen', \App\Livewire\Frontend\Veranstaltungen\Index::class)->name('veranstaltungen.index');
@@ -87,11 +87,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+/*Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+});*/
 
 //  Mitglieder Bereich
 
