@@ -59,6 +59,7 @@ class Show extends Component
         $this->payments = Payment::where('team_id', $this->team->id)->orderByDesc('payment_for_month')->limit(3)->get();
         $this->payments->gesamt = number_format($this->payments->where('bezahlt', true)->sum('betrag'), 2, ',', '.').' €';
         $this->payments->gesamtOpen = number_format($this->payments->where('bezahlt', false)->sum('betrag'), 2, ',', '.').' €';
+        $this->payments->gesamtOverdue = null;
         foreach ($this->payments as $payment) {
             $this->payments->gesamtOverdue = number_format($this->payments->where('payment_for_month', '<', now())->where('bezahlt', false)->sum('betrag'), 2, ',', '.').' €';
         }

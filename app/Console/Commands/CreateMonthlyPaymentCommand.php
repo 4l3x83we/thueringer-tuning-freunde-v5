@@ -25,6 +25,7 @@ class CreateMonthlyPaymentCommand extends Command
                 if (! Payment::where('team_id', $team->id)->where('payment_for_month', Carbon::parse($now)->endOfQuarter()->startOfMonth())->latest()->first()) {
                     Payment::create([
                         'team_id' => $team->id,
+                        'name' => $team->fullname(),
                         'betrag' => $team->zahlung,
                         'payment_for_month' => Carbon::parse($now)->addMonths($i)->startOfMonth(),
                         'date_of_payment' => null,

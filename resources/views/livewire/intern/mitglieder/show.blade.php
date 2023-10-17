@@ -211,61 +211,63 @@
                         <!-- end Fahrzeuge -->
                     @endif
 
-                    @if($team->user_id === auth()->id())
-                        <!-- Zahlungen -->
-                        <div class="rounded bg-gray-50 p-4 shadow-xl group dark:bg-gray-900 flex flex-col">
-                            <div class="flex justify-between items-center gap-4 mb-2">
-                                <h3 class="mb-1 text-xl font-bold">Zahlungen</h3>
-                                <div class="flex flex-wrap justify-end items-center gap-2">
-                                    @if($payments->gesamtOverdue !== '0,00 €')
-                                        <div class="font-bold text-red-500 dark:text-red-700">Überfällig: <span>{{ $payments->gesamtOverdue }}</span></div>
-                                    @endif
-                                    @if($payments->gesamtOpen !== '0,00 €')
-                                        <div class="font-bold text-red-500 dark:text-red-700">Offen: <span>{{ $payments->gesamtOpen }}</span></div>
-                                    @endif
-                                    <div class="font-bold text-success-500 dark:text-success-700">Bezahlt: <span>{{ $payments->gesamt }}</span></div>
+                    @if($team->gesamt)
+                        @if($team->user_id === auth()->id())
+                            <!-- Zahlungen -->
+                            <div class="rounded bg-gray-50 p-4 shadow-xl group dark:bg-gray-900 flex flex-col">
+                                <div class="flex justify-between items-center gap-4 mb-2">
+                                    <h3 class="mb-1 text-xl font-bold">Zahlungen</h3>
+                                    <div class="flex flex-wrap justify-end items-center gap-2">
+                                        @if($payments->gesamtOverdue !== '0,00 €')
+                                            <div class="font-bold text-red-500 dark:text-red-700">Überfällig: <span>{{ $payments->gesamtOverdue }}</span></div>
+                                        @endif
+                                        @if($payments->gesamtOpen !== '0,00 €')
+                                            <div class="font-bold text-red-500 dark:text-red-700">Offen: <span>{{ $payments->gesamtOpen }}</span></div>
+                                        @endif
+                                        <div class="font-bold text-success-500 dark:text-success-700">Bezahlt: <span>{{ $payments->gesamt }}</span></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <x-custom.table.responsive.table>
-                                <x-custom.table.responsive.thead>
-                                    <tr>
-                                        <x-custom.table.responsive.th text="Monat"/>
-                                        <x-custom.table.responsive.th text="Betrag"/>
-                                        <x-custom.table.responsive.th text="Bezahlt am"/>
-                                    </tr>
-                                </x-custom.table.responsive.thead>
-                                <x-custom.table.responsive.tbody>
+                                <x-custom.table.responsive.table>
+                                    <x-custom.table.responsive.thead>
+                                        <tr>
+                                            <x-custom.table.responsive.th text="Monat"/>
+                                            <x-custom.table.responsive.th text="Betrag"/>
+                                            <x-custom.table.responsive.th text="Bezahlt am"/>
+                                        </tr>
+                                    </x-custom.table.responsive.thead>
+                                    <x-custom.table.responsive.tbody>
+                                        @foreach($payments as $payment)
+                                            <x-custom.table.responsive.tr>
+                                                <x-custom.table.responsive.td class="!p-2 font-medium {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal" text="{{ Carbon::parse($payment->payment_for_month)->isoFormat('MMMM') }}"/>
+                                                <x-custom.table.responsive.td class="!p-2 font-medium {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal" :text="number_format($payment->betrag, 2, ',', '.').' €'"/>
+                                                <x-custom.table.responsive.td class="!p-2 font-medium {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal" text="{{ $payment->date_of_payment ? Carbon::parse($payment->date_of_payment)->isoFormat('DD.MM.YY') : null  }}"/>
+                                            </x-custom.table.responsive.tr>
+                                        @endforeach
+                                    </x-custom.table.responsive.tbody>
+                                </x-custom.table.responsive.table>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
                                     @foreach($payments as $payment)
-                                        <x-custom.table.responsive.tr>
-                                            <x-custom.table.responsive.td class="!p-2 font-medium {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal" text="{{ Carbon::parse($payment->payment_for_month)->isoFormat('MMMM') }}"/>
-                                            <x-custom.table.responsive.td class="!p-2 font-medium {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal" :text="number_format($payment->betrag, 2, ',', '.').' €'"/>
-                                            <x-custom.table.responsive.td class="!p-2 font-medium {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal" text="{{ $payment->date_of_payment ? Carbon::parse($payment->date_of_payment)->isoFormat('DD.MM.YY') : null  }}"/>
-                                        </x-custom.table.responsive.tr>
-                                    @endforeach
-                                </x-custom.table.responsive.tbody>
-                            </x-custom.table.responsive.table>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-                                @foreach($payments as $payment)
-                                    <div class="bg-gray-50 dark:bg-gray-800 rounded shadow-xl p-2 space-y-3">
-                                        <div class="flex flex-col text-sm">
-                                            <div class="flex items-center gap-4 {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }}">
-                                                <div class="w-1/3">Monat</div>
-                                                <div class="w-2/3">{{ Carbon::parse($payment->payment_for_month)->isoFormat('MMMM') }}</div>
-                                            </div>
-                                            <div class="flex items-center gap-4 {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }}">
-                                                <div class="w-1/3">Betrag</div>
-                                                <div class="w-2/3">{{ number_format($payment->betrag, 2, ',', '.').' €' }}</div>
-                                            </div>
-                                            <div class="flex items-center gap-4 {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }}">
-                                                <div class="w-1/3">Bezahlt am</div>
-                                                <div class="w-2/3">{{ $payment->date_of_payment ? Carbon::parse($payment->date_of_payment)->isoFormat('DD.MM.YY') : null }}</div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 rounded shadow-xl p-2 space-y-3">
+                                            <div class="flex flex-col text-sm">
+                                                <div class="flex items-center gap-4 {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }}">
+                                                    <div class="w-1/3">Monat</div>
+                                                    <div class="w-2/3">{{ Carbon::parse($payment->payment_for_month)->isoFormat('MMMM') }}</div>
+                                                </div>
+                                                <div class="flex items-center gap-4 {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }}">
+                                                    <div class="w-1/3">Betrag</div>
+                                                    <div class="w-2/3">{{ number_format($payment->betrag, 2, ',', '.').' €' }}</div>
+                                                </div>
+                                                <div class="flex items-center gap-4 {{ $payment->bezahlt ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }}">
+                                                    <div class="w-1/3">Bezahlt am</div>
+                                                    <div class="w-2/3">{{ $payment->date_of_payment ? Carbon::parse($payment->date_of_payment)->isoFormat('DD.MM.YY') : null }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-                        <!-- end Zahlungen -->
+                            <!-- end Zahlungen -->
+                        @endif
                     @endif
 
                     @if($team->user_id === auth()->id())

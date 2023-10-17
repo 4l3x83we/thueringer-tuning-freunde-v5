@@ -4,11 +4,14 @@ namespace App\Livewire\Intern\Zahlungen;
 
 use App\Models\Intern\Payment;
 use Carbon\Carbon;
+use DB;
 use Livewire\Component;
 
 class Index extends Component
 {
     public $zahlungen;
+
+    public $zahlungUpdate = '';
 
     public $zahlungGesamt;
 
@@ -16,26 +19,10 @@ class Index extends Component
 
     public function mount()
     {
-        $this->zahlungen = Payment::whereBetween('payment_for_month', [now()->subYears(date('Y') - 2017), now()->addYear()])
-            ->orderBy('payment_for_month', 'DESC')
-            ->get()
-            ->groupBy(function ($val) {
-                return Carbon::parse($val->payment_for_month)->isoFormat('MMMM YYYY');
-            });
-        /*$this->zahlungen = Payment::whereBetween('payment_for_month', [now()->subYears(date('Y') - 2017), now()->addYear()])
-            ->orderBy('payment_for_month', 'DESC')
-            ->get()
-            ->groupBy(function ($val) {
-                return Carbon::parse($val->payment_for_month)->isoFormat('MMMM YYYY');
-            });
-        $this->zahlungGesamt = number_format(Payment::where('bezahlt', true)->sum('betrag'), 2, ',', '.').' €';
-        $this->years = Payment::selectRaw('year(payment_for_month) year')
-            ->groupBy('year')
-            ->orderBy('year', 'DESC')
-            ->get();*/
+        $this->zahlungUpdate = Carbon::now()->year;
     }
 
-    /*public function pay($id, $status)
+    public function pay($id, $status)
     {
         if ($status) {
             Payment::where('id', $id)->update(['bezahlt' => $status, 'date_of_payment' => now()->format('Y-m-d')]);
@@ -44,15 +31,27 @@ class Index extends Component
         }
 
         return redirect(route('intern.zahlungen.index'));
-    }*/
-
-    /*public function bezahlt()
-    {
-        dd(123);
-    }*/
+    }
 
     public function render()
     {
+        $this->zahlungen = json_encode(Payment::select('*', DB::raw('DATE(payment_for_month) as date'))
+            ->whereLike(['payment_for_month'], $this->updatedZahlungUpdate())
+            ->orderByDesc('payment_for_month')
+            ->get()
+            ->groupBy('date'), JSON_THROW_ON_ERROR);
+        $this->zahlungGesamt = number_format(Payment::where('bezahlt', true)
+            ->whereLike(['payment_for_month'], $this->updatedZahlungUpdate())->sum('betrag'), 2, ',', '.').' €';
+        $this->years = Payment::selectRaw('year(payment_for_month) year')
+            ->orderByDesc('year')
+            ->groupBy('year')
+            ->get();
+
         return view('livewire.intern.zahlungen.index');
+    }
+
+    public function updatedZahlungUpdate()
+    {
+        return $this->zahlungUpdate;
     }
 }
