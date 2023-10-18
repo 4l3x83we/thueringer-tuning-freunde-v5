@@ -33,9 +33,8 @@ class PDFController extends Controller
         return $pdf->download('geburtstagsliste.pdf');
 
         /*return response()->streamDownload(function () use ($pdf) {
-            echo $pdf->download();
-        }, 'geburtstag.pdf');*/
-        //        return $pdf;
+            echo $pdf->stream();
+        }, 'geburtstagsliste.pdf');*/
     }
 
     public function telefonliste()

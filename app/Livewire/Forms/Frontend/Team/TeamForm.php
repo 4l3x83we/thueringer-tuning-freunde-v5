@@ -109,14 +109,18 @@ class TeamForm extends Form
         $this->team->update($this->only(['anrede', 'vorname', 'nachname', 'strasse', 'plz', 'wohnort', 'telefon', 'mobil', 'email', 'geburtstag', 'beruf', 'description', 'tiktok', 'instagram', 'facebook']));
         $this->team->update(['ip_adresse' => request()->getClientIp()]);
         Toastr::success('Dein Profil wurde angepasst.', ' ');
-        foreach (Team::all() as $team) {
-            sleep(1);
-            $mail = [
-                'subject' => 'Das Profil von '.$this->team->vorname.' wurde geändert.',
-                'name' => $team->vorname,
-                'description' => '<p>'.ucfirst(auth()->user()->teams->slug).' hat gerade sein Profil geändert.</p>',
-            ];
-            Mail::to($team->email)->send(new BestaetigungsMail($mail));
+        if ($this->team->funktion !== 'Werkstattmieter') {
+            foreach (Team::all() as $team) {
+                sleep(1);
+                $mail = [
+                    'subject' => 'Das Profil von '.$this->team->vorname.' wurde geändert.',
+                    'name' => $team->vorname,
+                    'description' => '<p>'.ucfirst(auth()->user()->teams->slug).' hat gerade sein Profil geändert.</p>',
+                ];
+                if ($team->funktion !== 'Werkstattmieter') {
+                    Mail::to($team->email)->send(new BestaetigungsMail($mail));
+                }
+            }
         }
 
         return redirect()->route('frontend.team.show', $this->team->slug);
