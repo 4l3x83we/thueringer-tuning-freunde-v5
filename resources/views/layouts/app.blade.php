@@ -22,7 +22,7 @@
     </head>
     <body class="bg-gray-50 dark:bg-gray-800 text-sm text-gray-500 dark:text-white">
     <div class="flex flex-col h-screen justify-between">
-        @if(false)
+        @if(geburtstag())
             @include('layouts.partials.banner')
         @endif
         @include('layouts.partials.navigation')

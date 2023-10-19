@@ -19,7 +19,7 @@
         <x-custom.form.toggle id="form.published"/>
     </div>
     <div class="col-span-2 lg:col-span-9">
-        <x-custom.form.label-input id="form.description" wire:model="form.description" text="Beschreibung" stern="true"/>
+        <x-custom.form.label-input id="form.description" wire:model="form.description" text="Beschreibung"/>
     </div>
     <div class="col-span-2 lg:col-span-9">
         <div

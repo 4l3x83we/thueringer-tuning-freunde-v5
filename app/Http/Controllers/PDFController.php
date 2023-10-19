@@ -30,20 +30,51 @@ class PDFController extends Controller
 
         $pdf = Pdf::loadView('intern.geburtstagsliste', compact('teams'))->setPaper('A4', 'portrait');
 
-        return $pdf->download('geburtstagsliste.pdf');
-
-        /*return response()->streamDownload(function () use ($pdf) {
+        return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
-        }, 'geburtstagsliste.pdf');*/
+        }, 'geburtstagsliste.pdf');
     }
 
     public function telefonliste()
     {
-        return redirect()->back();
+        $teams = Team::where('published', true)
+            ->orderBy('vorname')
+            ->get()
+            ->groupBy(function ($date) {
+                return $date->vorname[0];
+            });
+
+        $pdf = Pdf::loadView('intern.telefonliste', compact('teams'))->setPaper('A4', 'portrait');
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+        }, 'telefonliste.pdf');
     }
 
     public function satzung()
     {
-        return redirect()->back();
+        $teams = Team::where('published', true)->where('funktion', '!=', 'Werkstattmieter')->get();
+        $gruend = Team::where('funktion', 'Gründungsmitglied')->get();
+        $zahlungGesamt = [];
+        $zahlungWerkstatt = [];
+        $zahlungMitgliedsbeitrag = [];
+        foreach ($teams as $team) {
+            $zahlungGesamt[] = $team->zahlung;
+            if ($team->zahlungs_art === 'Werkstatt') {
+                $zahlungWerkstatt[] = $team->zahlung;
+            }
+            if ($team->zahlungs_art === 'Mitgliedsbeitrag') {
+                $zahlungMitgliedsbeitrag[] = $team->zahlung;
+            }
+        }
+        $teams->gesamt = array_sum($zahlungGesamt);
+        $teams->werkstatt = array_sum($zahlungWerkstatt);
+        $teams->mitgliedsbeitrag = array_sum($zahlungMitgliedsbeitrag);
+
+        $pdf = Pdf::loadView('intern.satzung', compact('teams', 'gruend'))->setPaper('A4', 'portrait');
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->stream();
+        }, 'Satzung_Thueringer_Tuning_Freunde_Stand_'.Carbon::parse(now())->format('m.Y').'.pdf');
     }
 }

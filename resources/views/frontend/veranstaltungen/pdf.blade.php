@@ -66,7 +66,7 @@
             </tr>
             <tr>
                 <th style="width: 3cm; padding: 2px; text-align: left;">Ort</th>
-                <td style="white-space: normal; padding: 2px;">{{ $item->veranstaltungsort }}</td>
+                <td style="white-space: normal; padding: 2px;"><a href="https://maps.google.com/maps?saddr=&daddr={{ $item->veranstaltungsort }}" target="_blank" style="text-decoration: none; color: #000000;">{{ $item->veranstaltungsort }}</a></td>
             </tr>
             <tr>
                 <th style="width: 3cm; padding: 2px; text-align: left;">Quelle</th>
@@ -77,7 +77,7 @@
                 <td style="white-space: normal; padding: 2px;">@if($item->eintritt === 'link in der Beschreibung' or $item->eintritt === 'siehe Beschreibung' or empty($item->eintritt))
                         Kein Eintrittspreis bekannt.
                     @else
-                        {{ $item->eintritt }}
+                        {{ $item->eintritt. ' €' }}
                     @endif</td>
             </tr>
             <tr>

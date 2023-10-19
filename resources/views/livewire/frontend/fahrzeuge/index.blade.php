@@ -5,12 +5,13 @@
     @endphp
     <div class="max-w-screen-2xl px-4 py-8 mx-auto lg:py-10 lg:px-6">
 
+        @can('write')
+            <div class="flex items-center justify-end">
+                <x-custom.links.button-link  href="{{ route('frontend.fahrzeuge.create') }}">Neues Fahrzeug anlegen</x-custom.links.button-link>
+            </div>
+        @endcan
+
         @if(count($fahrzeuges) > 0)
-            @can('write')
-                <div class="flex items-center justify-end">
-                    <x-custom.links.button-link  href="{{ route('frontend.fahrzeuge.create') }}">Neues Fahrzeug anlegen</x-custom.links.button-link>
-                </div>
-            @endcan
             <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @foreach($fahrzeuges as $fahrzeuge)
                     @if($fahrzeuge->published)

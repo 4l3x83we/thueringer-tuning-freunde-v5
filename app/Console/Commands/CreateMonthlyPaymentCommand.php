@@ -22,10 +22,11 @@ class CreateMonthlyPaymentCommand extends Command
 
         for ($i = 0; $i <= $lastOfQuarter - $firstOfQuarter; $i++) {
             foreach ($teams as $team) {
+                $mieter = $team->zahlungs_art === 'Miete' ? ' (Mieter)' : null;
                 if (! Payment::where('team_id', $team->id)->where('payment_for_month', Carbon::parse($now)->endOfQuarter()->startOfMonth())->latest()->first()) {
                     Payment::create([
                         'team_id' => $team->id,
-                        'name' => $team->fullname(),
+                        'name' => $team->fullname().$mieter,
                         'betrag' => $team->zahlung,
                         'payment_for_month' => Carbon::parse($now)->addMonths($i)->startOfMonth(),
                         'date_of_payment' => null,

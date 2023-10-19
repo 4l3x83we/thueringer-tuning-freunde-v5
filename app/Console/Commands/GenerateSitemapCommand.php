@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Frontend\Alben\Album;
 use App\Models\Frontend\Fahrzeuge\Fahrzeuge;
+use App\Models\Frontend\Gaestebuch\Gaestebuch;
 use App\Models\Frontend\Team\Team;
 use App\Models\Frontend\Veranstaltungen\Veranstaltungen;
 use Carbon\Carbon;
@@ -28,9 +29,14 @@ class GenerateSitemapCommand extends Command
             ->add(Url::create('/galerie')->setLastModificationDate(Carbon::create(Album::where('updated_at', '<=', now())->first()->updated_at)))
             ->add(Url::create('/veranstaltungen')->setLastModificationDate(Carbon::create(Veranstaltungen::where('updated_at', '<=', now())->first()->updated_at)))
             ->add(Url::create('/kontakt')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))))
-            ->add(Url::create('/gaestebuch'))
             ->add(Url::create('/impressum')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))))
             ->add(Url::create('/datenschutz')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))));
+
+        if (Gaestebuch::all() === null) {
+            $sitemap->add(Url::create('/gaestebuch')->setLastModificationDate(Carbon::create(Gaestebuch::where('updated_at', '<=', now())->first()->updated_at)));
+        } else {
+            $sitemap->add(Url::create('/gaestebuch')->setLastModificationDate(Carbon::create(env('LAST_MODIFIED'))));
+        }
 
         if (! File::exists(public_path('sitemap.xml'))) {
             File::put(public_path('sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?>');

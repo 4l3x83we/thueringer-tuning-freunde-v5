@@ -2,6 +2,7 @@
 
 use App\Models\Frontend\Alben\Album;
 use App\Models\Frontend\Alben\Photos;
+use App\Models\Frontend\Team\Team;
 use Butschster\Head\Facades\Meta;
 use Butschster\Head\Packages\Entities\OpenGraphPackage;
 use Butschster\Head\Packages\Entities\TwitterCardPackage;
@@ -442,4 +443,14 @@ function getHourRate($date_from, $date_to): string
     $end = Carbon::createFromFormat('Y-m-d H:i:s', $date_to);
 
     return number_format($start->floatDiffInHours($end), 2, ',', '.');
+}
+
+function geburtstag()
+{
+    $geb = Team::where('published', true)->orderBy('vorname')->get();
+    foreach ($geb as $team) {
+        if (Carbon::parse($team->geburtsdatum)->format('d.m') == date('d.m')) {
+            return '<div>Alles Gute '.$team->vorname.' zum '.Carbon::parse($team->geburtsdatum)->age.'. Geburtstag</div>';
+        }
+    }
 }

@@ -16,7 +16,6 @@ use App\Livewire\Intern\Calendar\CalendarIndex;
 use App\Livewire\Intern\Calendar\CalendarShow;
 use App\Models\Frontend\Team\Team;
 use App\Models\Frontend\Veranstaltungen\Veranstaltungen;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Spatie\Sitemap\Sitemap;
 use Spatie\WelcomeNotification\WelcomesNewUsers;
@@ -37,19 +36,30 @@ use Yoeunes\Toastr\Facades\Toastr;
 Route::name('frontend.')->group(function () {
     Route::get('/', \App\Livewire\Frontend\Index::class)->name('index');
     Route::get('/mail', function () {
-        $teams = Team::where('published', true)
-            ->orderBy('geburtsdatum')
-            ->get()
-            ->groupBy(function ($date) {
-                return Carbon::parse($date->geburtsdatum)->monthName;
-            });
+        $teams = Team::where('published', true)->where('funktion', '!=', 'Werkstattmieter')->get();
+        $gruend = Team::where('funktion', 'Gründungsmitglied')->get();
+        $zahlungGesamt = [];
+        $zahlungWerkstatt = [];
+        $zahlungMitgliedsbeitrag = [];
+        foreach ($teams as $team) {
+            $zahlungGesamt[] = $team->zahlung;
+            if ($team->zahlungs_art === 'Werkstatt') {
+                $zahlungWerkstatt[] = $team->zahlung;
+            }
+            if ($team->zahlungs_art === 'Mitgliedsbeitrag') {
+                $zahlungMitgliedsbeitrag[] = $team->zahlung;
+            }
+        }
+        $teams->gesamt = array_sum($zahlungGesamt);
+        $teams->werkstatt = array_sum($zahlungWerkstatt);
+        $teams->mitgliedsbeitrag = array_sum($zahlungMitgliedsbeitrag);
         /*$mail = [
             'subject' => 'Testmail',
             'name' => '',
             'description' => '<p>es wurde eine neue Galerie erstellt von '.$team->fullname().'.</p>  <p class="mt-4">zur Galerie:</p>',
         ];*/
 
-        return view('intern.geburtstagsliste', ['teams' => $teams]);
+        return view('intern.satzung', ['teams' => $teams, 'gruend' => $gruend]);
     });
     //  Ueber uns
 

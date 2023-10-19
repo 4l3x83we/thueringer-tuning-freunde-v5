@@ -58,12 +58,14 @@
                 <td style="text-align: center; font-weight: bold; padding: 4px; color: #ff4400; font-size: 16px; margin-bottom: 12px;" colspan="4">{{ $month }}</td>
             </tr>
             @foreach($team as $item)
+                @if($item->funktion !== 'Werkstattmieter')
                 <tr>
                     <td>{{ $item->vorname . ' ' . $item->nachname }}</td>
                     <td>{{ Carbon::parse($item->geburtsdatum)->isoFormat('DD.MM.YYYY') }}</td>
                     <td>{{ Carbon::parse($item->geburtsdatum)->age . ' Jahre' }}</td>
                     <td>{{ Carbon::parse($item->geburtsdatum)->age + 1 . ' Jahre' }}</td>
                 </tr>
+                @endif
             @endforeach
         @endforeach
     </tbody>

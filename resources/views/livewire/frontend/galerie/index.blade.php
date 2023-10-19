@@ -2,6 +2,12 @@
     <x-meta.title title="Galerie" />
     <div class="max-w-screen-2xl px-4 py-8 mx-auto lg:py-10 lg:px-6">
 
+        @can('write')
+            <div class="flex items-center justify-end gap-4 pb-4">
+                <x-custom.links.button-link href="{{ route('frontend.galerie.album.create') }}">Neues Album anlegen</x-custom.links.button-link>
+            </div>
+        @endcan
+
         @if(count($alben) > 0)
             <!-- Filter -->
             <div class="flex items-center justify-center py-4 flex-wrap gap-4">
@@ -11,12 +17,6 @@
                 @endforeach
             </div>
             <!-- end Filter -->
-
-            @can('write')
-                <div class="flex items-center justify-end gap-4 pb-4">
-                    <x-custom.links.button-link href="{{ route('frontend.galerie.album.create') }}">Neues Album anlegen</x-custom.links.button-link>
-                </div>
-            @endcan
 
             <!-- Gallery -->
             <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="galerie-container">

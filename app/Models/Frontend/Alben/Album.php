@@ -35,10 +35,10 @@ class Album extends Model
         return $this->belongsTo(Team::class, 'user_id');
     }
 
-    public function fahrzeuges()
+    /*public function fahrzeuges()
     {
         return $this->belongsTo(Fahrzeuge::class, 'fahrzeug_id');
-    }
+    }*/
 
     public function photosCount()
     {
