@@ -12,16 +12,16 @@ class CreateMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $album;
+    public $alben;
 
-    public function __construct($album)
+    public function __construct($alben)
     {
-        $this->album = $album;
+        $this->alben = $alben;
     }
 
     public function envelope(): Envelope
     {
-        return new Envelope(subject: 'Ein neues Album wurde angelegt und muss Freigegeben werden..');
+        return new Envelope(to: env('TTF_EMAIL'), subject: 'Ein neues Album wurde angelegt und muss Freigegeben werden.');
     }
 
     public function content(): Content

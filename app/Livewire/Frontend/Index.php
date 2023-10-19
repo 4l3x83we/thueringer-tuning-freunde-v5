@@ -22,7 +22,7 @@ class Index extends Component
     public function mount()
     {
         $this->veranstaltungen = Veranstaltungen::where('datum_bis', '>=', Carbon::now()->addMinutes(30))->select('id', 'anwesend', 'datum_von', 'datum_bis', 'veranstaltung', 'veranstalter', 'eintritt', 'slug', 'veranstaltungsort', 'quelle')->orderBy('datum_von', 'ASC')->limit(6)->get();
-        $this->teams = Team::wherePublished(true)->orderBy('vorname')->get();
+        $this->teams = Team::where('funktion', '!=', 'Werkstattmieter')->wherePublished(true)->orderBy('vorname')->get();
         $this->fahrzeuge = Fahrzeuge::wherePublished(true)->orderByDesc('updated_at')->get();
         $this->alben = Album::wherePublished(true)->inRandomOrder()->get();
     }

@@ -95,7 +95,7 @@
             </div>
             <div class="text-center xl:max-w-4xl mt-4">
             <p class="text-2xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">{{ __("You aren't connected to a working internet connection") }}</p>
-            <a href="{{ URL::previous() }}" class="mt-4 text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-3 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ __("Retry") }}</a>
+            <a href="{{ URL::previous() }}" class="mt-4 text-white dark:text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-3 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ __("Retry") }}</a>
             </div>
         </div>
-</x-single-layout>>
+</x-single-layout>

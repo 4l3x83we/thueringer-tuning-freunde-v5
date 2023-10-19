@@ -7,7 +7,7 @@
             <div class="my-8 rounded bg-gray-100 p-4 shadow-xl group dark:bg-gray-900 flex flex-col gap-4">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <!-- Veranstaltung Beschreibung -->
-                    <div class="col-span-2 lg:col-span-2 order-last lg:order-first h-full p-2">
+                    <div class="col-span-2 lg:col-span-2 h-full p-2">
                         <h1 class="mb-2 text-2xl">{{ $veranstaltungen->veranstaltung }}</h1>
                         <hr class="border-primary-500">
                         @if($veranstaltungen->description)
@@ -121,6 +121,8 @@
                         </p>
                         <hr class="my-4 border-primary-500">
                         <div class="flex flex-col gap-4">
+                            @guest
+                            @else
                             <div>
                                 <x-custom.links.a-blank href="{{ route('frontend.veranstaltungen.edit', $veranstaltungen->slug) }}" >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pen h-4 w-4 mr-2" viewBox="0 0 16 16">
@@ -129,6 +131,7 @@
                                     Bearbeiten
                                 </x-custom.links.a-blank>
                             </div>
+                            @endguest
                             @hasanyrole('super_admin|admin')
                                 @if(!$veranstaltungen->published)
                                     <div>

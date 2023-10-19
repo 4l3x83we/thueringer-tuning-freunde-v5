@@ -77,9 +77,15 @@ class Show extends Component
     public function preview($photoID)
     {
         // Changing the preview image
-        Photos::where('album_id', $this->album->id)->where('thumbnail', true)->first()->update(['thumbnail' => null]);
-        $this->album->update(['thumbnail_id' => $photoID]);
-        Photos::where('id', $photoID)->update(['thumbnail' => true]);
+        $photo = Photos::where('album_id', $this->album->id)->where('thumbnail', true)->first();
+        if (empty($photo)) {
+            $this->album->update(['thumbnail_id' => $photoID]);
+            Photos::where('id', $photoID)->update(['thumbnail' => true]);
+        } else {
+            $this->album->update(['thumbnail_id' => $photoID]);
+            Photos::where('id', $photoID)->update(['thumbnail' => true]);
+        }
+
         toastr()->info('Vorschaubild wurde geändert!', ' ');
 
         return redirect()->route('frontend.galerie.show', $this->album->slug);

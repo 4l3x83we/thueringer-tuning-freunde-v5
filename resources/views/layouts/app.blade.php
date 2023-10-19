@@ -22,8 +22,11 @@
     </head>
     <body class="bg-gray-50 dark:bg-gray-800 text-sm text-gray-500 dark:text-white">
     <div class="flex flex-col h-screen justify-between">
-        @if(geburtstag())
-            @include('layouts.partials.banner')
+        @if(false)
+            @guest
+            @else
+                @include('layouts.partials.banner')
+            @endguest
         @endif
         @include('layouts.partials.navigation')
         <main class="mb-auto">

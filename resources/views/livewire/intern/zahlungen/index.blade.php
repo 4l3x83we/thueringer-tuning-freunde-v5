@@ -16,8 +16,8 @@
                     </div>
                 </div>
                 <!-- end Filter -->
-                <x-custom.table.responsive.table>
-                    <x-custom.table.responsive.thead>
+                <x-custom.table.table>
+                    <x-slot:thead>
                         <tr>
                             <x-custom.table.responsive.th class="w-12" text="#"/>
                             <x-custom.table.responsive.th text="Name"/>
@@ -25,8 +25,8 @@
                             <x-custom.table.responsive.th class="w-24 text-center" text="Bezahlt am"/>
                             <x-custom.table.responsive.th class="w-12" text=""/>
                         </tr>
-                    </x-custom.table.responsive.thead>
-                    <x-custom.table.responsive.tbody>
+                    </x-slot:thead>
+                    <x-slot:tbody>
                         @foreach(json_decode($zahlungen, false) as $month => $zahlung)
                             <x-custom.table.responsive.tr>
                                 <x-custom.table.responsive.td class="!p-2 font-bold text-primary-500 dark:text-primary-500 !whitespace-normal text-center align-middle" :text="Carbon::create($month)->isoFormat('MMMM YYYY')" colspan="5"/>
@@ -81,13 +81,8 @@
                             <x-custom.table.responsive.td colspan="3" class="!p-2 font-medium cursor-pointer !whitespace-normal text-right" :text="$zahlungGesamt"/>
                             <x-custom.table.responsive.td colspan="2" class="!p-2 font-medium cursor-pointer !whitespace-normal text-right" text=""/>
                         </x-custom.table.responsive.tr>
-                    </x-custom.table.responsive.tbody>
-                </x-custom.table.responsive.table>
-                <x-custom.table.responsive.table-grid>
-                    <x-custom.table.responsive.table-grid-inhalt>
-                        123
-                    </x-custom.table.responsive.table-grid-inhalt>
-                </x-custom.table.responsive.table-grid>
+                    </x-slot:tbody>
+                </x-custom.table.table>
             </div>
         </div>
     </div>

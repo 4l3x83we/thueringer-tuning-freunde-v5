@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Auth\MyWelcomeController;
 use App\Http\Controllers\PDFController;
-use App\Http\Controllers\ProfileController;
 use App\Livewire\Frontend\Antrag\Annahme;
 use App\Livewire\Frontend\Antrag\AnnahmeShow;
 use App\Livewire\Frontend\Fahrzeuge\Create;
@@ -35,32 +34,32 @@ use Yoeunes\Toastr\Facades\Toastr;
 // Frontend
 Route::name('frontend.')->group(function () {
     Route::get('/', \App\Livewire\Frontend\Index::class)->name('index');
-    Route::get('/mail', function () {
-        $teams = Team::where('published', true)->where('funktion', '!=', 'Werkstattmieter')->get();
-        $gruend = Team::where('funktion', 'Gründungsmitglied')->get();
-        $zahlungGesamt = [];
-        $zahlungWerkstatt = [];
-        $zahlungMitgliedsbeitrag = [];
-        foreach ($teams as $team) {
-            $zahlungGesamt[] = $team->zahlung;
-            if ($team->zahlungs_art === 'Werkstatt') {
-                $zahlungWerkstatt[] = $team->zahlung;
-            }
-            if ($team->zahlungs_art === 'Mitgliedsbeitrag') {
-                $zahlungMitgliedsbeitrag[] = $team->zahlung;
-            }
-        }
-        $teams->gesamt = array_sum($zahlungGesamt);
-        $teams->werkstatt = array_sum($zahlungWerkstatt);
-        $teams->mitgliedsbeitrag = array_sum($zahlungMitgliedsbeitrag);
-        /*$mail = [
-            'subject' => 'Testmail',
-            'name' => '',
-            'description' => '<p>es wurde eine neue Galerie erstellt von '.$team->fullname().'.</p>  <p class="mt-4">zur Galerie:</p>',
-        ];*/
-
-        return view('intern.satzung', ['teams' => $teams, 'gruend' => $gruend]);
-    });
+    //    Route::get('/mail', function () {
+    //        $teams = Team::where('published', true)->where('funktion', '!=', 'Werkstattmieter')->get();
+    //        $gruend = Team::where('funktion', 'Gründungsmitglied')->get();
+    //        $zahlungGesamt = [];
+    //        $zahlungWerkstatt = [];
+    //        $zahlungMitgliedsbeitrag = [];
+    //        foreach ($teams as $team) {
+    //            $zahlungGesamt[] = $team->zahlung;
+    //            if ($team->zahlungs_art === 'Werkstatt') {
+    //                $zahlungWerkstatt[] = $team->zahlung;
+    //            }
+    //            if ($team->zahlungs_art === 'Mitgliedsbeitrag') {
+    //                $zahlungMitgliedsbeitrag[] = $team->zahlung;
+    //            }
+    //        }
+    //        $teams->gesamt = array_sum($zahlungGesamt);
+    //        $teams->werkstatt = array_sum($zahlungWerkstatt);
+    //        $teams->mitgliedsbeitrag = array_sum($zahlungMitgliedsbeitrag);
+    //        /*$mail = [
+    //            'subject' => 'Testmail',
+    //            'name' => '',
+    //            'description' => '<p>es wurde eine neue Galerie erstellt von '.$team->fullname().'.</p>  <p class="mt-4">zur Galerie:</p>',
+    //        ];*/
+    //
+    //        return view('intern.satzung', ['teams' => $teams, 'gruend' => $gruend]);
+    //    });
     //  Ueber uns
 
     //  Team
@@ -91,17 +90,6 @@ Route::name('frontend.')->group(function () {
     //  Gästebuch
     Route::get('/gaestebuch', App\Livewire\Frontend\Gaestebuch\Index::class)->name('gaestebuch.index');
 });
-
-// Backend
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-/*Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});*/
 
 //  Mitglieder Bereich
 

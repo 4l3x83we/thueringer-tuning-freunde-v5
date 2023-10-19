@@ -1,5 +1,6 @@
 @php use App\Models\Frontend\Alben\Photos;use Carbon\Carbon; @endphp
 <div>
+    @if(auth()->id() === $team->user_id or auth()->user()->hasAnyRole('admin|super_admin'))
     <div class="mx-auto max-w-screen-2xl px-4 py-8 lg:px-6 lg:py-10">
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -137,7 +138,7 @@
                         <!-- end Fahrzeuge -->
                     @endif
                     @if(!$team->albums->isEmpty())
-                        <!-- Fahrzeuge -->
+                        <!-- Alben -->
                         <div class="rounded bg-gray-50 p-4 shadow-xl group dark:bg-gray-900 flex flex-col">
                             <h3 class="mb-1 text-xl font-bold">Deine Alben</h3>
                             <x-custom.table.responsive.table>
@@ -155,14 +156,14 @@
                                             <x-custom.table.responsive.td class="!p-2 font-medium {{ $album->published ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} cursor-pointer !whitespace-normal align-top" wire:click="showGalerie('{{ $album->slug }}')" :text="$album->id"/>
                                             <x-custom.table.responsive.td class="!p-2 font-medium {{ $album->published ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} cursor-pointer !whitespace-normal align-top" wire:click="showGalerie('{{ $album->slug }}')" :text="$album->title"/>
                                             <x-custom.table.responsive.td class="!p-2 font-medium {{ $album->published ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} cursor-pointer !whitespace-normal align-top text-center" wire:click="showGalerie('{{ $album->slug }}')" :text="$album->photos->count()"/>
-                                            <x-custom.table.responsive.td class="!p-2 font-medium {{ $album->published ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} cursor-pointer !whitespace-normal align-top text-center">
+                                            <x-custom.table.responsive.td class="!p-2 font-medium {{ $album->published ? 'text-success-500 dark:text-success-700' : 'text-red-500 dark:text-red-700' }} !whitespace-normal align-top text-center">
                                                 <div class="flex justify-end items-center gap-4">
                                                     @can('edit')
-                                                        <x-custom.button.button-blank :href="route('frontend.galerie.edit', $album->slug)" color="blue">
+                                                        <x-custom.links.a-blank :href="route('frontend.galerie.edit', $album->slug)" color="blue">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pen w-4 h-4" viewBox="0 0 16 16">
                                                                 <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                                                             </svg>
-                                                        </x-custom.button.button-blank>
+                                                        </x-custom.links.a-blank>
                                                     @endcan
                                                     @can('destroy')
                                                         <x-custom.button.button-blank wire:click="$dispatch('triggerDeleteGalerie','{{ $album->slug }}')" color="red">
@@ -208,7 +209,7 @@
                             </div>
                             <x-custom.delete.script id="triggerDeleteGalerie" function="destroyGalerie"/>
                         </div>
-                        <!-- end Fahrzeuge -->
+                        <!-- end Alben -->
                     @endif
 
                     @if($team->gesamt)
@@ -487,4 +488,7 @@
 
     </div>
     <x-custom.delete.sweetAlert/>
+    @else
+        {!! abort(403) !!}
+    @endif
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms\Frontend\Galerie\Album;
 
+use App\Mail\Album\CreateMail;
 use App\Models\Frontend\Alben\Album;
 use App\Models\Frontend\Alben\Photos;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use File;
 use Livewire\Attributes\Rule;
 use Livewire\Form;
 use Livewire\WithFileUploads;
+use Mail;
 use Str;
 
 class AlbumForm extends Form
@@ -31,7 +33,7 @@ class AlbumForm extends Form
     public bool $published = false;
 
     #[Rule('nullable|max:4294967295', as: 'Beschreibung')]
-    public string $description = '';
+    public $description = '';
 
     #[Rule('nullable', as: 'Bilder')]
     public array $images = [];
@@ -94,9 +96,11 @@ class AlbumForm extends Form
             }
 
             $thumbnailID = Photos::where('album_id', $album->id)->inRandomOrder()->first()->id;
-            Album::where('id', $album->id)->update(['thumbnail_id' => $thumbnailID, 'published' => true, 'published_at', now()]);
-            Photos::where('id', $thumbnailID)->update(['thumbnail' => true, 'published' => true, 'published_at', now()]);
-
+            Album::where('id', $album->id)->update(['thumbnail_id' => $thumbnailID]);
+            Photos::where('id', $thumbnailID)->update(['thumbnail' => true]);
+            if ($album->published === false) {
+                Mail::send(new CreateMail($album));
+            }
             toastr()->success('Das Album mit dem Title '.$this->validate()['title'].' wurde angelegt', ' ');
         } else {
             $pathTitle = explode('/', $this->galerie->path)[0];
@@ -132,8 +136,6 @@ class AlbumForm extends Form
             if ((bool) $this->published === false) {
                 $this->galerie->update(['published' => false, 'published_at' => null]);
                 $this->galerie->photos()->update(['published' => false, 'published_at' => null]);
-                Album::where('id', $this->galerie->thumbnail_id)->update(['published' => true, 'published_at', now()]);
-                Photos::where('id', $this->galerie->thumbnail_id)->update(['thumbnail' => true, 'published' => true, 'published_at', now()]);
             } elseif ((bool) $this->published === true) {
                 $this->galerie->update(['published' => true, 'published_at' => $this->published_at]);
                 $this->galerie->photos()->update(['published' => true, 'published_at' => $this->published_at]);

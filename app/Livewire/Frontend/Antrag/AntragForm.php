@@ -49,6 +49,6 @@ class AntragForm extends Form
     #[Rule('nullable', as: 'Beruf')]
     public $beruf = '';
 
-    #[Rule('required|min:250', as: 'Beschreibung')]
+    #[Rule('required', as: 'Beschreibung')]
     public $description = '';
 }

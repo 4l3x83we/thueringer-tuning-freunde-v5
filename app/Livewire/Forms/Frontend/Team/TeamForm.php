@@ -47,7 +47,7 @@ class TeamForm extends Form
     #[Rule('nullable|max:255', as: 'Beruf')]
     public $beruf = '';
 
-    #[Rule('required|max:4294967295|min:200', as: 'Description')]
+    #[Rule('required|max:4294967295', as: 'Description')]
     public $description = '';
 
     #[Rule('nullable|max:255', as: 'Facebook')]

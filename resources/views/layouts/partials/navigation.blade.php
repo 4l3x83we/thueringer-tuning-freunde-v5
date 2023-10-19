@@ -94,9 +94,9 @@
                                             </a>
                                         </li>
                                         @hasanyrole('member|admin|super_admin')
-                                        <li><a href="{{ route('intern.pdf.geburtstagsliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Geburtstagsliste</a></li>
-                                        <li><a href="{{ route('intern.pdf.telefonliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Telefonliste</a></li>
-                                        <li><a href="{{ route('intern.pdf.satzung') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Satzung</a></li>
+                                        <li class="hidden lg:visible"><a href="{{ route('intern.pdf.geburtstagsliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Geburtstagsliste</a></li>
+                                        <li class="hidden lg:visible"><a href="{{ route('intern.pdf.telefonliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Telefonliste</a></li>
+                                        <li class="hidden lg:visible"><a href="{{ route('intern.pdf.satzung') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Satzung</a></li>
                                         @endhasanyrole
                                         @hasanyrole('member|admin|super_admin|garage')
                                         <li>
@@ -121,12 +121,12 @@
                                                     {{ __('Mitglieder') }}
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" href="{{ route('intern.zahlungen.index') }}" >
+                                                    {{ __('Zahlungen') }}
+                                                </a>
+                                            </li>
                                             @hasrole('super_admin')
-                                                <li>
-                                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" href="{{ route('intern.zahlungen.index') }}" >
-                                                        {{ __('Zahlungen') }}
-                                                    </a>
-                                                </li>
                                                 <li>
                                                     <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" href="{{ route('intern.rollen.index') }}" >
                                                         {{ __('Rollen') }}
@@ -201,6 +201,7 @@
                             <a href="{{ route('frontend.kontakt.index') }}"  class="block py-2 pl-3 pr-4 text-sm md:text-base text-gray-900 rounded hover:bg-gray-100 xl:hover:bg-transparent xl:hover:text-primary-700 xl:p-0 dark:text-white xl:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent dark:border-gray-700">Kontakt</a>
                         @endif
                     </li>
+                    @if(!auth()->check() or auth()->user()->hasAnyRole('admin|super_admin'))
                     <li>
                         @if(Request::is('antrag'))
                             <a href="{{ route('frontend.antrag.index') }}"  class="block py-2 pl-3 pr-4 text-sm md:text-base text-white bg-primary-700 rounded xl:bg-transparent xl:text-primary-700 xl:p-0 xl:dark:text-primary-500 font-bold dark:hover:text-white hover:text-gray-900" aria-current="page">Antrag</a>
@@ -208,6 +209,7 @@
                             <a href="{{ route('frontend.antrag.index') }}"  class="block py-2 pl-3 pr-4 text-sm md:text-base text-gray-900 rounded hover:bg-gray-100 xl:hover:bg-transparent xl:hover:text-primary-700 xl:p-0 dark:text-white xl:dark:hover:text-primary-500 dark:hover:bg-gray-700 dark:hover:text-white xl:dark:hover:bg-transparent dark:border-gray-700">Antrag</a>
                         @endif
                     </li>
+                    @endif
                     <li>
                         @if(Request::is('gaestebuch'))
                             <a href="{{ route('frontend.gaestebuch.index') }}"  class="block py-2 pl-3 pr-4 text-sm md:text-base text-white bg-primary-700 rounded xl:bg-transparent xl:text-primary-700 xl:p-0 xl:dark:text-primary-500 font-bold dark:hover:text-white hover:text-gray-900" aria-current="page">Gästebuch</a>

@@ -450,7 +450,7 @@ function geburtstag()
     $geb = Team::where('published', true)->orderBy('vorname')->get();
     foreach ($geb as $team) {
         if (Carbon::parse($team->geburtsdatum)->format('d.m') == date('d.m')) {
-            return '<div>Alles Gute '.$team->vorname.' zum '.Carbon::parse($team->geburtsdatum)->age.'. Geburtstag</div>';
+            return '<div>Alles Gute zum '.Carbon::parse($team->geburtsdatum)->age.'. Geburtstag.</div>';
         }
     }
 }

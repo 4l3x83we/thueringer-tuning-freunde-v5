@@ -14,11 +14,11 @@
                     </div>
                     <div class="relative"></div>
                     <div class="gap-4 flex flex-wrap justify-between mt-0 md:justify-end">
-                        @can('edit')
+                        {{--@can('edit')
                             <div>
                                 @hasanyrole('super_admin|admin')
                                 @if(auth()->user()->id !== $team->user_id)
-                                    <x-custom.links.button-link color="blue" href="{{ route('frontend.galerie.edit', $album->slug) }}">
+                                    <x-custom.links.button-link color="purple" href="{{ route('frontend.galerie.edit', $album->slug) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil h-4 w-4" viewBox="0 0 16 16">
                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                         </svg>
@@ -33,8 +33,8 @@
                                     </x-custom.links.button-link>
                                 @endif
                             </div>
-                        @endcan
-                        <div>
+                        @endcan--}}
+                        {{--<div>
                             @hasanyrole('super_admin|admin|member|silent_member')
                                 <x-custom.delete.sweetAlert />
                                 @if(auth()->id() === $team->user_id)
@@ -43,7 +43,7 @@
                                     <x-custom.delete.delete-button delete-i-d="{{ $album->slug }}" color="red-border" />
                                 @endif
                             @endhasanyrole
-                        </div>
+                        </div>--}}
                         <div>
                             <x-custom.links.button-link href="{{ route('frontend.galerie.index') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-skip-backward h-4 w-4" viewBox="0 0 16 16">
@@ -79,12 +79,14 @@
                                 <th class="text-right px-2">Zuletzt aktualisiert:</th>
                                 <td class="text-left px-2 pb-2">{{ Carbon::parse($album->updated_at)->fromNow() }}</td>
                             </tr>
-                            <tr class="align-top border-t border-primary-500">
-                                <td class="text-left p-2" colspan="2"></td>
-                            </tr>
-                            <tr class="align-top">
-                                <td class="text-left px-2" colspan="2">{!! $album->description !!}</td>
-                            </tr>
+                            @if($album->description)
+                                <tr class="align-top border-t border-primary-500">
+                                    <td class="text-left p-2" colspan="2"></td>
+                                </tr>
+                                <tr class="align-top">
+                                    <td class="text-left px-2" colspan="2">{!! $album->description !!}</td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -191,51 +193,55 @@
                     </div>
                 </div>
 
-                <div class="gap-4 border-t border-primary-500 mt-4 pt-4" id="alben">
-                    <div
-                        x-data="{ uploading: false, progress: 0 }"
-                        x-on:livewire-upload-start="uploading = true"
-                        x-on:livewire-upload-finish="uploading = false"
-                        x-on:livewire-upload-error="uploading = false"
-                    >
-                        @if($images)
-                            <div class="grid grid-cols-12 gap-2">
-                                <div class="col-span-12">
-                                    <h1 class="mb-2 text-lg">Vorschau</h1>
-                                </div>
-                                @foreach($images as $image)
-                                    @if($image->getFilename() != 'livewire-tmp')
-                                        <div>
-                                            <img src="{{ $image->temporaryUrl() }}" class="h-auto w-full rounded-lg">
+                @if(auth()->id() === $team->user_id or auth()->user()->hasAnyRole('admin|super_admin'))
+                    @can('edit')
+                        <div class="gap-4 border-t border-primary-500 mt-4 pt-4" id="add">
+                            <div
+                                x-data="{ uploading: false, progress: 0 }"
+                                x-on:livewire-upload-start="uploading = true"
+                                x-on:livewire-upload-finish="uploading = false"
+                                x-on:livewire-upload-error="uploading = false"
+                            >
+                                @if($images)
+                                    <div class="grid grid-cols-12 gap-2">
+                                        <div class="col-span-12">
+                                            <h1 class="mb-2 text-lg">Vorschau</h1>
                                         </div>
-                                    @else
-                                        <div>
-                                            <span class="text-red-700">Irgendetwas stimmt nicht mit ihrem Bild.</span>
+                                        @foreach($images as $image)
+                                            @if($image->getFilename() != 'livewire-tmp')
+                                                <div>
+                                                    <img src="{{ $image->temporaryUrl() }}" class="h-auto w-full rounded-lg">
+                                                </div>
+                                            @else
+                                                <div>
+                                                    <span class="text-red-700">Irgendetwas stimmt nicht mit ihrem Bild.</span>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                        @error('images')
+                                        <span class="text-xs text-red-600 dark:text-red-500">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                @else
+                                    <x-custom.form.file-dropzone id="images" model="images" multiple="true" text="Weitere Bilder hinzufügen"/>
+                                @endif
+                                <div x-show="uploading">
+                                    <div class="mt-4 text-center">
+                                        <div role="status">
+                                            <svg aria-hidden="true" class="mr-2 inline h-8 w-8 animate-spin text-gray-200 fill-primary-600 dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                                            </svg>
+                                            <span class="sr-only">Loading...</span>
                                         </div>
-                                    @endif
-                                @endforeach
-                                @error('images')
-                                <span class="text-xs text-red-600 dark:text-red-500">
-                                    {{ $message }}
-                                </span>
-                                @enderror
-                            </div>
-                        @else
-                            <x-custom.form.file-dropzone id="images" model="images" multiple="true" text="Weitere Bilder hinzufügen"/>
-                        @endif
-                        <div x-show="uploading">
-                            <div class="mt-4 text-center">
-                                <div role="status">
-                                    <svg aria-hidden="true" class="mr-2 inline h-8 w-8 animate-spin text-gray-200 fill-primary-600 dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-                                    </svg>
-                                    <span class="sr-only">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    @endcan
+                @endif
 
             </div>
         </div>
