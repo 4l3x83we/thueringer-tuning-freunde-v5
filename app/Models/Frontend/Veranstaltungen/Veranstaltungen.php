@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Veranstaltungen extends Model
 {
-    use Sluggable;
+    use LogsActivity, Sluggable;
 
     protected $fillable = ['datum_von', 'datum_bis', 'veranstaltung', 'veranstaltungsort', 'veranstalter', 'description', 'quelle', 'slug', 'eintritt', 'published', 'published_at', 'anwesend', 'calendar_id'];
 
@@ -48,5 +50,15 @@ class Veranstaltungen extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*'])
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->useLogName('Veranstaltungen')
+            ->dontSubmitEmptyLogs();
     }
 }

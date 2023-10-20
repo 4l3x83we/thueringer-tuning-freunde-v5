@@ -5,7 +5,7 @@
 
             <div class="rounded bg-gray-50 p-4 shadow-xl group dark:bg-gray-900 flex flex-col gap-4">
                 <!-- Filter -->
-                <div class="flex items-center justify-center py-4 flex-wrap gap-4">
+                <div class="flex items-center justify-end py-4 flex-wrap gap-4">
                     <div class="w-32">
                         <x-custom.form.select-label id="filters" wire:model.live="zahlungUpdate">
                             <option value="">All</option>
@@ -13,6 +13,15 @@
                                 <option value="{{ Carbon::create($year->year)->year }}">{{ $year->year }}</option>
                             @endforeach
                         </x-custom.form.select-label>
+                    </div>
+                    <div>
+                        <x-custom.button.button wire:click="paymentUpdateCommand" class="mt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-counterclockwise w-4 h-4 mr-2 -ml-1" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                            </svg>
+                            Neu Mitglieder updaten
+                        </x-custom.button.button>
                     </div>
                 </div>
                 <!-- end Filter -->

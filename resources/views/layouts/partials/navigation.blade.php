@@ -94,9 +94,11 @@
                                             </a>
                                         </li>
                                         @hasanyrole('member|admin|super_admin')
-                                        <li class="hidden lg:visible"><a href="{{ route('intern.pdf.geburtstagsliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Geburtstagsliste</a></li>
-                                        <li class="hidden lg:visible"><a href="{{ route('intern.pdf.telefonliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Telefonliste</a></li>
-                                        <li class="hidden lg:visible"><a href="{{ route('intern.pdf.satzung') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Satzung</a></li>
+                                        <div class="hidden lg:block">
+                                        <li><a href="{{ route('intern.pdf.geburtstagsliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Geburtstagsliste</a></li>
+                                        <li><a href="{{ route('intern.pdf.telefonliste') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Telefonliste</a></li>
+                                        <li><a href="{{ route('intern.pdf.satzung') }}"  class="block px-4 py-2 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Satzung</a></li>
+                                        </div>
                                         @endhasanyrole
                                         @hasanyrole('member|admin|super_admin|garage')
                                         <li>

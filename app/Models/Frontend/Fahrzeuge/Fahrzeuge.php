@@ -9,10 +9,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Fahrzeuge extends Model
 {
-    use Sluggable;
+    use LogsActivity, Sluggable;
 
     protected $fillable = ['user_id', 'album_id', 'team_id', 'fahrzeug', 'slug', 'baujahr', 'besonderheiten', 'motor', 'karosserie', 'felgen', 'fahrwerk', 'bremsen', 'innenraum', 'anlage', 'description', 'path', 'published', 'published_at'];
 
@@ -86,5 +88,15 @@ class Fahrzeuge extends Model
     public function albums()
     {
         return $this->belongsTo(Album::class, 'album_id');
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['*'])
+            ->logOnlyDirty()
+            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->useLogName('Fahrzeug')
+            ->dontSubmitEmptyLogs();
     }
 }

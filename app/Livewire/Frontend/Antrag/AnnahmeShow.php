@@ -41,7 +41,48 @@ class AnnahmeShow extends Component
     public $function;
 
     #[Rule('nullable')]
+    public $zahlung;
+
+    #[Rule('nullable')]
+    public $zahlungsArt;
+
+    #[Rule('nullable')]
     public $is_checked;
+
+    public function updatedZahlungsArt()
+    {
+        if ($this->zahlungsArt === 'Mitgliedsbeitrag') {
+            $this->zahlungsArt = 'Mitgliedsbeitrag';
+            $this->zahlung = number_format(20, 2);
+            if ($this->teams->zahlungs_art) {
+                Team::where('id', $this->teams->id)->update(['zahlungs_art' => $this->zahlungsArt, 'zahlung' => $this->zahlung]);
+
+                return redirect(route('intern.annahme.index'));
+            }
+        }
+
+        if ($this->zahlungsArt === 'Werkstatt') {
+            $this->zahlungsArt = 'Werkstatt';
+            $this->zahlung = number_format(25, 2);
+            if ($this->teams->zahlungs_art) {
+                Team::where('id', $this->teams->id)->update(['zahlungs_art' => $this->zahlungsArt, 'zahlung' => $this->zahlung]);
+            }
+        } elseif ($this->zahlungsArt === 'Miete') {
+            $this->zahlungsArt = 'Miete';
+            $this->zahlung = number_format(80, 2);
+            if ($this->teams->zahlungs_art) {
+                Team::where('id', $this->teams->id)->update(['zahlungs_art' => $this->zahlungsArt, 'zahlung' => $this->zahlung]);
+            }
+        } else {
+            if ($this->teams->zahlungs_art) {
+                Team::where('id', $this->teams->id)->update(['zahlungs_art' => null, 'zahlung' => null]);
+
+                return redirect(route('intern.annahme.index'));
+            }
+        }
+
+        return null;
+    }
 
     public function mount($team)
     {
@@ -59,6 +100,8 @@ class AnnahmeShow extends Component
             }
         }
         $this->slug = $this->teams->vorname;
+        $this->zahlung = number_format($this->teams->zahlung, 2);
+        $this->zahlungsArt = $this->teams->zahlungs_art;
         $this->function = 'Clubmitglied';
         $this->published_at = Carbon::parse(now())->format('Y-m-d');
         if ($this->teams->user_id) {
@@ -66,6 +109,18 @@ class AnnahmeShow extends Component
         } else {
             $this->alben = [];
         }
+    }
+
+    public function updatedZahlung()
+    {
+        if ($this->zahlungsArt === 'Werkstatt') {
+            $this->zahlungsArt = 'Werkstatt';
+        } elseif ($this->zahlungsArt === 'Miete') {
+            $this->zahlungsArt = 'Miete';
+        }
+        Team::where('id', $this->teams->id)->update(['zahlungs_art' => $this->zahlungsArt, 'zahlung' => $this->zahlung]);
+
+        return redirect(route('intern.annahme.index'));
     }
 
     public function checked()
@@ -88,6 +143,8 @@ class AnnahmeShow extends Component
             'published' => 1,
             'slug' => $slug,
             'funktion' => $this->function,
+            'zahlungs_art' => $this->zahlungsArt,
+            'zahlung' => $this->zahlung,
             'user_id' => $user->id,
             'published_at' => $published_at,
         ]);
@@ -156,6 +213,8 @@ class AnnahmeShow extends Component
             'published' => 0,
             'slug' => null,
             'funktion' => null,
+            'zahlungs_art' => null,
+            'zahlung' => null,
             'user_id' => null,
             'published_at' => null,
         ]);

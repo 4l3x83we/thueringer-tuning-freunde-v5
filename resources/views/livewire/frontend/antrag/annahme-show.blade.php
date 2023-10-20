@@ -227,7 +227,16 @@
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div class="col-span-2 lg:col-span-1">
                                         <x-custom.form.input id="slug" wire:model="slug" text="Title"/>
-                                        <x-custom.form.input class="mt-2" type="date" id="published_at" wire:model="published_at" text="Mitglied seit"/>
+                                            <x-custom.form.select-label id="zahlungsArt" wire:model.live="zahlungsArt">
+                                                <option value="">Noch nicht Bekannt</option>
+                                                <option value="Mitgliedsbeitrag">Mitgliedsbeitrag</option>
+                                                <option value="Werkstatt">Werkstatt</option>
+                                                <option value="Miete">Miete</option>
+                                            </x-custom.form.select-label>
+                                            @if($zahlung)
+                                                <x-custom.form.input class="mt-2" id="zahlung" type="number" wire:model.blur="zahlung" text="Zahlung"/>
+                                            @endif
+{{--                                        <x-custom.form.input class="mt-2" type="date" id="published_at" wire:model="published_at" text="Mitglied seit"/>--}}
                                         <x-custom.form.select-label id="function" wire:model="function">
                                             <option value="Clubmitglied">Clubmitglied</option>
                                             <option value="Passives Mitglied">Passives Mitglied</option>
@@ -253,7 +262,19 @@
                             </form>
                         @else
                             <form wire:submit.prevent="revoke">
-                                <div class="text-right">
+                                <div class="flex justify-between items-start gap-4">
+                                    <div class="w-1/2 flex flex-wrap">
+                                        <x-custom.form.select-label text="Beitrag/Miete" id="zahlungsArt" wire:model.live="zahlungsArt">
+                                            <option value="">Noch nicht Bekannt</option>
+                                            <option value="Mitgliedsbeitrag">Mitgliedsbeitrag</option>
+                                            <option value="Werkstatt">Werkstatt</option>
+                                            <option value="Miete">Miete</option>
+                                        </x-custom.form.select-label>
+                                        @if($zahlung)
+                                            <x-custom.form.input class="mt-4" id="zahlung" type="number" wire:model.blur="zahlung" text="Zahlung"/>
+                                        @endif
+                                    </div>
+                                    <div class="w-1/2 text-right">
                                     @if(!empty($teams->fahrzeuges_id))
                                         @if(!empty($teams->albums))
                                             <x-custom.form.input type="hidden" id="albumID" wire:model="albumID" wire:key="{{ $teams->albums->id }}"/>
@@ -266,6 +287,7 @@
                                         </svg>
                                         Zurückziehen
                                     </x-custom.button.button>
+                                    </div>
                                 </div>
                             </form>
                         @endif

@@ -3,6 +3,7 @@
 namespace App\Livewire\Intern\Mitglieder;
 
 use App\Models\Frontend\Team\Team;
+use App\Models\User;
 use Livewire\Component;
 
 class Index extends Component
@@ -19,6 +20,15 @@ class Index extends Component
     public function show($slug)
     {
         return redirect(route('intern.mitglieder.show', $slug));
+    }
+
+    public function sendNewPassword(User $user)
+    {
+        $expiresAt = now()->addMonth();
+        $user->sendWelcomeNotification($expiresAt);
+        toastr()->info('Die Einladung zum neu setzen der Passwortes wurde versand an: '.$user->vorname.' '.$user->nachname.' mit der E-Mail '.$user->email, ' ');
+
+        return redirect(route('intern.mitglieder.index'));
     }
 
     public function render()

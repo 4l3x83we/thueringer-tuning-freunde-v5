@@ -3,6 +3,7 @@
 namespace App\Livewire\Intern\Zahlungen;
 
 use App\Models\Intern\Payment;
+use Artisan;
 use Carbon\Carbon;
 use DB;
 use Livewire\Component;
@@ -53,5 +54,12 @@ class Index extends Component
     public function updatedZahlungUpdate()
     {
         return $this->zahlungUpdate;
+    }
+
+    public function paymentUpdateCommand()
+    {
+        Artisan::call('create:monthly-payment');
+
+        return redirect(route('intern.zahlungen.index'));
     }
 }
