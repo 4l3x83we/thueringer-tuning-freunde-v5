@@ -18,7 +18,7 @@ class Index extends Component
         $alben = Album::when($this->kategorieFilter, function ($query) {
             $query->where('kategorie', $this->kategorieFilter);
         })->where('published', true)->where('kategorie', '!=', 'Fahrzeuge')->orderBy('updated_at', 'DESC')->paginate(21);
-        $alben->kategorie = Album::where('published', true)->where('kategorie', '!=', 'Fahrzeuge')->select('kategorie')->groupBy('kategorie')->get(21);
+        $alben->kategorie = Album::where('published', true)->where('kategorie', '!=', 'Fahrzeuge')->select('kategorie')->groupBy('kategorie')->get(21)->toArray();
         $image = null;
         if (empty($alben)) {
             $albenThumbnail = $alben[random_int(0, $alben->count() - 1)]->where('kategorie', '!=', 'Fahrzeuge')->select(['thumbnail_id', 'path'])->inRandomOrder()->first();

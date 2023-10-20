@@ -1,5 +1,10 @@
 <div>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.922872876048!2d11.10425717659835!3d51.14328917173278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a405bfa95dab67%3A0x95ced3453404d44a!2sTh%C3%BCringer%20Tuning%20Freunde!5e1!3m2!1sde!2sde!4v1694502206245!5m2!1sde!2sde" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="cookieconsent-optin-marketing">
+        <iframe data-cookieconsent="marketing" data-cookieblock-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.922872876048!2d11.10425717659835!3d51.14328917173278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a405bfa95dab67%3A0x95ced3453404d44a!2sTh%C3%BCringer%20Tuning%20Freunde!5e1!3m2!1sde!2sde!4v1694502206245!5m2!1sde!2sde" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="cookieconsent-optout-marketing flex justify-center font-bold mt-4 text-xl">
+        Bitte&nbsp;<a href="javascript: Cookiebot.renew()" class="underline">Marketing-Cookies akzeptieren</a>, um diesen Inhalt anzuzeigen.
+    </div>
 
     <div class="max-w-screen-2xl px-4 py-8 mx-auto lg:py-10 lg:px-6">
 

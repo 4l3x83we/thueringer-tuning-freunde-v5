@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\MyWelcomeController;
 use App\Http\Controllers\PDFController;
 use App\Livewire\Frontend\Antrag\Annahme;
 use App\Livewire\Frontend\Antrag\AnnahmeShow;
+use App\Livewire\Frontend\Datenschutz;
 use App\Livewire\Frontend\Fahrzeuge\Create;
+use App\Livewire\Frontend\Impressum;
 use App\Livewire\Frontend\Kontakt\Index;
 use App\Livewire\Frontend\Team\Edit;
 use App\Livewire\Frontend\Team\Show;
@@ -89,6 +91,9 @@ Route::name('frontend.')->group(function () {
     Route::get('/kontakt', Index::class)->name('kontakt.index');
     //  Gästebuch
     Route::get('/gaestebuch', App\Livewire\Frontend\Gaestebuch\Index::class)->name('gaestebuch.index');
+    Route::get('/impressum', Impressum::class)->name('impressum');
+    Route::get('/datenschutz', Datenschutz::class)->name('datenschutz');
+    Route::get('/cookie', \App\Livewire\Frontend\Cookie::class)->name('cookie');
 });
 
 //  Mitglieder Bereich

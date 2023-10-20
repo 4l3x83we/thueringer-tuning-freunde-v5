@@ -19,6 +19,7 @@
         @stack('meta')
         <!-- Include CSS Files -->
         @stack('css')
+        @include('layouts.partials.cookieScript')
     </head>
     <body class="bg-gray-50 dark:bg-gray-800 text-sm text-gray-500 dark:text-white">
     <div class="flex flex-col h-screen justify-between">
@@ -38,5 +39,12 @@
 {{--    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>--}}
     @stack('js')
     @stack('scripts')
+    <script  type = "text/javascript" >
+        function CookiebotCallback_OnAccept() {
+            if (!Cookiebot.consent.statistics) return ;
+            // Code ausführen, der ein Cookie setzt
+            document.cookie = "username=John Smith; Expires=Do, 18. Dez. 2022 12:00:00 UTC; path=/" ;
+        }
+    </script>
     </body>
 </html>

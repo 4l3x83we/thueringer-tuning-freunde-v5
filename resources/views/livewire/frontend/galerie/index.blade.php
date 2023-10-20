@@ -13,8 +13,9 @@
             <div class="flex items-center justify-center py-4 flex-wrap gap-4">
                 <x-custom.button.button id="all" class="filter-btn filter-active !shadow-none">Alle</x-custom.button.button>
                 @foreach($alben->kategorie as $kategorie)
-                    <x-custom.button.button class="filter-btn filter-inactive !shadow-none" id="filter-{{ $kategorie->kategorie }}">{{ replaceBlankMinus($kategorie->kategorie) }}</x-custom.button.button>
+                    <x-custom.button.button class="filter-btn filter-inactive !shadow-none" id="filter-{{ $kategorie['kategorie'] }}">{{ replaceBlankMinus($kategorie['kategorie']) }}</x-custom.button.button>
                 @endforeach
+                <x-custom.links.button-link href="#instagram" class="filter-inactive !shadow-none">Instagram Feeds</x-custom.links.button-link>
             </div>
             <!-- end Filter -->
 
@@ -37,10 +38,10 @@
                                     <div class="bg-gray-100/60 dark:bg-gray-900/60 overflow-hidden relative h-[306px] rounded-t m-0">
                                         @if($album->thumbnail_id)
                                             <div class="absolute w-full h-full z-10 blur-sm" style="background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3) ), url('{{ $image }}') center no-repeat; background-size: auto, cover;"></div>
-                                            <div class="filter-none z-20 relative w-[306px] h-[274px] my-4 mx-auto group-hover:scale-110" style="background: url('{{ $image }}') center no-repeat; background-size: auto, 306px;"></div>
+                                            <div class="filter-none z-20 relative w-[306px] h-[274px] my-4 mx-auto group-hover:scale-110" style="background: url('{{ $image }}') center no-repeat; background-size: 306px, 306px;"></div>
                                         @else
                                             <div class="absolute w-full h-full z-10 blur-sm" style="background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3) ), url('{{ asset('images/logo.svg') }}') center no-repeat; background-size: auto, cover;"></div>
-                                            <div class="filter-none z-20 relative w-[306px] h-[274px] my-4 mx-auto group-hover:scale-110" style="background: url('{{ asset('images/logo.svg') }}') center no-repeat; background-size: auto, 306px;"></div>
+                                            <div class="filter-none z-20 relative w-[306px] h-[274px] my-4 mx-auto group-hover:scale-110" style="background: url('{{ asset('images/logo.svg') }}') center no-repeat; background-size: 306px, 306px;"></div>
                                         @endif
                                     </div>
                                     <div class="bg-gray-100/60 dark:bg-gray-900/60 overflow-hidden h-[90px] rounded-b-lg p-4 text-center">
@@ -79,5 +80,7 @@
                 </div>
             </div>
         @endif
+
+        <livewire:frontend.instagram.instagram-feed />
     </div>
 </div>

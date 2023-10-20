@@ -73,7 +73,7 @@
                         </div>
                         <hr class="my-4 border-primary-500">
                         <h4 class="mb-2 text-2xl">Ort</h4>
-                        <p class="mb-2">{{ $veranstaltungen->veranstaltungsort }}
+                        <div class="mb-2">{{ $veranstaltungen->veranstaltungsort }}
                             <span class="mb-2 block"></span>
                             @if(auth()->check())
                                 <x-custom.links.a-blank color="primary" href="https://maps.google.com/maps?saddr={{ auth()->user()->teams->strasse.', '. auth()->user()->teams->plz.', '. auth()->user()->teams->wohnort }}&daddr={{ $veranstaltungen->veranstaltungsort }}" target="_blank">
@@ -92,8 +92,13 @@
                                     zum Routenplaner
                                 </x-custom.links.a-blank>
                             @endif
-                            <iframe class="mt-2" width="100%" height="auto" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?hl=de&amp;q='.{{ $veranstaltungen->veranstaltungsort }}.'&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
-                        </p>
+                            <div class="cookieconsent-optin-marketing">
+                                <iframe data-cookieconsent="marketing" class="mt-2" width="100%" height="auto" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" data-cookieblock-src="https://maps.google.com/maps?hl=de&amp;q='.{{ $veranstaltungen->veranstaltungsort }}.'&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                            </div>
+                            <div class="cookieconsent-optout-marketing flex justify-center font-bold mt-2 text-success-700">
+                                Bitte&nbsp;<a href="javascript: Cookiebot.renew()" class="underline">Marketing-Cookies akzeptieren</a>, um diesen Inhalt anzuzeigen.
+                            </div>
+                        </div>
                         <hr class="my-4 border-primary-500">
                         <h4 class="mb-2 text-2xl text-red-700">Veranstalter</h4>
                         <p class="flex items-center gap-2">

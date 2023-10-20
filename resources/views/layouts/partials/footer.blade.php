@@ -28,7 +28,7 @@
                 <h2 class="mb-6 text-lg text-gray-900 uppercase dark:text-white font-bold">Nützliche Links</h2>
                 <ul class="text-gray-500 dark:text-gray-400 font-medium">
                     <li class="mb-2">
-                        <a href="" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
+                        <a href="{{ route('frontend.index') }}" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
                             <svg class="w-2.5 h-2.5 text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
+                        <a href="{{ route('frontend.kontakt.index') }}" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
                             <svg class="w-2.5 h-2.5 text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
+                        <a href="{{ route('frontend.impressum') }}" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
                             <svg class="w-2.5 h-2.5 text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
+                        <a href="{{ route('frontend.datenschutz') }}" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
                             <svg class="w-2.5 h-2.5 text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="#" onclick="CCM.openWidget(); return false;" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
+                        <a href="{{ route('frontend.cookie') }}" onclick="CCM.openWidget(); return false;" class="hover:underline hover:text-primary-500 hover:scale-105 duration-300 inline-flex items-center gap-4">
                             <svg class="w-2.5 h-2.5 text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg>
