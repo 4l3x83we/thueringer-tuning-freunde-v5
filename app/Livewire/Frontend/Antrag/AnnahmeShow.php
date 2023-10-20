@@ -172,10 +172,12 @@ class AnnahmeShow extends Component
         }
         $team->password = $password;
         $team->slug = $slug;
-        Mail::to($this->teams['email'])->send(new AntragGenehmigtMail($team));
-        foreach (Team::all() as $item) {
-            sleep(1);
-            Mail::to($item->email)->send(new AntragGenehmigtClubMail($team));
+        if (Team::find($this->teams->id)->funktion != 'Werkstattmieter') {
+            Mail::to($this->teams['email'])->send(new AntragGenehmigtMail($team));
+            foreach (Team::where('published', true)->get() as $item) {
+                sleep(2);
+                Mail::to($item->email)->send(new AntragGenehmigtClubMail($team));
+            }
         }
 
         $expiresAt = now()->addDays(7);
@@ -220,10 +222,12 @@ class AnnahmeShow extends Component
         ]);
 
         User::find($team->user_id)->delete();
-        foreach (Team::all() as $item) {
-            sleep(1);
-            Mail::to($item->email)->send(new AntragEntferntMail($team));
-        }
+        /*if (Team::find($this->teams->id)->funktion != 'Werkstattmieter') {
+            foreach (Team::all() as $item) {
+                sleep(10);
+                Mail::to($item->email)->send(new AntragEntferntMail($team));
+            }
+        }*/
         Toastr::success('Antrag wurde zurückgezogen', 'Erfolgreich');
 
         return redirect()->route('intern.annahme.index');
@@ -233,7 +237,7 @@ class AnnahmeShow extends Component
     {
         $team = Team::where('id', $id)->with('fahrzeuges')->first();
         foreach (Team::all() as $item) {
-            sleep(1);
+            sleep(10);
             Mail::to($item->email)->send(new AntragEntferntMail($team));
         }
         $team->fullname = replaceStrToLower($team->vorname.' '.$team->nachname);

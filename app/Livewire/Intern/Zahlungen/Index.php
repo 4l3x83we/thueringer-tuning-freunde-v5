@@ -39,6 +39,7 @@ class Index extends Component
         $this->zahlungen = json_encode(Payment::select('*', DB::raw('DATE(payment_for_month) as date'))
             ->whereLike(['payment_for_month'], $this->updatedZahlungUpdate())
             ->orderByDesc('payment_for_month')
+            ->orderByDesc('betrag')
             ->get()
             ->groupBy('date'), JSON_THROW_ON_ERROR);
         $this->zahlungGesamt = number_format(Payment::where('bezahlt', true)
