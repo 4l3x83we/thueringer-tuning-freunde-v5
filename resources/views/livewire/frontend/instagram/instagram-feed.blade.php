@@ -2,7 +2,7 @@
 <div>
     @isset($instagram_feed)
         <div class="flex items-center justify-center py-4 flex-wrap gap-4" id="instagram">
-            <h1 class="text-4xl">Die letzten 20 Instagram Feeds</h1>
+            <h1 class="text-4xl">Die letzten 12 Instagram Feeds</h1>
         </div>
         <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             @foreach($instagram_feed as $item)

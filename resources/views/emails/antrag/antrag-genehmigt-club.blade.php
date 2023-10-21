@@ -36,13 +36,15 @@
         </tr>
         @if(count($teams) > 0)
             @foreach($teams as $item)
-                @if($item->published == true)
-                    <tr class="align-top">
-                        <th class="w-1/3 py-2">{{ $item->vorname }}:</th>
-                        <td class="w-2/3 py-2">
-                            <a class="hover:text-primary-500" href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a>
-                        </td>
-                    </tr>
+                @if($item->funktion !== 'Werkstattmieter')
+                    @if($item->published == true)
+                        <tr class="align-top">
+                            <th class="w-1/3 py-2">{{ $item->vorname }}:</th>
+                            <td class="w-2/3 py-2">
+                                <a class="hover:text-primary-500" href="mailto:{{ $item->email }}" target="_blank">{{ $item->email }}</a>
+                            </td>
+                        </tr>
+                    @endif
                 @endif
             @endforeach
         @endif
