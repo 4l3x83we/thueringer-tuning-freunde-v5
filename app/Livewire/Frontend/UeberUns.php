@@ -17,7 +17,7 @@ class UeberUns extends Component
     {
         $this->count = [
             //'team' => Team::where('published', true)->count(),
-            'team' => Team::where('funktion', '!=', 'Werkstattmieter')->wherePublished('true')->count(),
+            'team' => (new Team)->wherePublished('true')->count(),
             'fahrzeuge' => Fahrzeuge::where('published', true)->count(),
             'treffen' => Veranstaltungen::where('datum_von', '>=', Carbon::parse(now())->format('Y-m-d H:i:s'))->where('anwesend', true)->count(),
             'projekte' => Album::where('kategorie', 'Projekte')->count(),
