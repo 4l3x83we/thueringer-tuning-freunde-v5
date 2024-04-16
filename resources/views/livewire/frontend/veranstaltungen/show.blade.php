@@ -139,19 +139,19 @@
                                     <div class="flex justify-center font-bold text-black text-base">
                                         Du bist der Organisator dieser Veranstaltung?
                                     </div>
-                                    <a class="flex justify-center text-primary-500 mt-2" href="{{ route('frontend.veranstaltungen.edit', $veranstaltungen->slug) }}">
+                                    {{--<a class="flex justify-center text-primary-500 mt-2" href="{{ route('frontend.veranstaltungen.edit', $veranstaltungen->slug) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-double-right h-4 w-4 mr-2" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
                                             <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
                                         </svg>
                                         Hier diese Veranstaltung bearbeiten.
-                                    </a>
+                                    </a>--}}
                                     <a class="flex justify-center text-primary-500" href="mailto:webmaster@thueringer-tuning-freunde.de?subject=Bearbeitungswunsch der Veranstaltung: {{ $veranstaltungen->veranstaltung }}&body=Alte Daten der Veranstaltung:%0D%0A%0D%0AWann: am {{ Carbon::parse($veranstaltungen->datum_von)->format('d.m.y H:i') }} - {{ Carbon::parse($veranstaltungen->datum_bis)->format('d.m.y H:i') }} Uhr%0D%0AVeranstaltung: {{ $veranstaltungen->veranstaltung }}%0D%0AVeranstalter: {{ $veranstaltungen->veranstalter }}%0D%0AVeranstaltungsort: {{ $veranstaltungen->veranstaltungsort }}%0D%0ALink zur Veranstaltung: {{ route('frontend.veranstaltungen.show', $veranstaltungen->slug) }}%0D%0A%0D%0AObenstehendes bitte nicht löschen. Ab hier können Sie Ihre Änderungen vornehmen.">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-double-right h-4 w-4 mr-2" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708"/>
                                             <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708"/>
                                         </svg>
-                                        Oder wende dich bei Änderungswünschen per E-Mail an uns.
+                                        Wende dich bei Änderungswünschen per E-Mail an uns.
                                     </a>
                                 </div>
                             @else
