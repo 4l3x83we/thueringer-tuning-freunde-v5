@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="items-center gap-4 lg:grid lg:grid-cols-2 xl:gap-8">
-                <img class="w-full mb-8 rounded-lg lg:mb-0 lg:flex shadow-xl border border-gray-500 shadow-gray-400 dark:shadow-gray-900 p-4 lozad" src="{{ asset('images/logo.svg') }}" data-src="{{ asset('images/logo.svg') }}" alt="Logo">
+                <img class="w-full mb-8 rounded-lg lg:mb-0 lg:flex shadow-xl border border-gray-500 shadow-gray-400 dark:shadow-gray-900 p-4 lozad" src="{{ asset('images/logo.svg') }}" data-src="{{ asset('images/logo.svg') }}" alt="Logo" width="100%" height="100%">
                 <div class="text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Hallo liebe Interessenten!</h2>
                     <p class="mb-8 font-light lg:text-xl italic">Wir sind eine kleine Gruppe von Schraubern und Autobegeisterten, die sich schon länger kennen, aber sich erst im Juli 2017 entschlossen haben, zusammen einen Club zu gründen.</p>

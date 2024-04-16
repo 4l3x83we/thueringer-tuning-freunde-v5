@@ -1,26 +1,29 @@
+@php use Carbon\Carbon; @endphp
 <div>
     <div class="mx-auto max-w-screen-2xl px-4 py-8 lg:px-6 lg:py-10">
         <div class="grid grid-cols-1 gap-4">
 
-            @if(count($eventsAktuell) > 0)
+            {{--@if(count($eventsAktuell) > 0)
+
                 <div class="rounded bg-gray-50 p-4 shadow-xl group dark:bg-gray-900 flex flex-col gap-4">
                     <h4 class="text-xl">Heutige Termine</h4>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         @foreach($eventsAktuell as $event)
-                        <div class="col-span-2 lg:col-span-1 rounded p-2" style="background-color: {{ $event->event_background_color }}; color: {{ $event->event_text_color }}; border: 1px solid {{ $event->event_border_color }}">
-                            <a href="{{ route('intern.calendar.edit', $event->id) }}"  class="text-white dark:text-white">
-                            <div class="flex flex-col">
-                                <span>{{ $event->title }}</span>
-                                <span>{!! $event->eventDate() !!}</span>
-                                <span>Beschreibung: {!! Str::limit($event->description, 255) !!}</span>
-                            </div>
-                            </a>
-                        </div>
+                                <div class="col-span-2 lg:col-span-1 rounded p-2" style="background-color: {{ $event->event_background_color }}; color: {{ $event->event_text_color }}; border: 1px solid {{ $event->event_border_color }}">
+                                    <a href="{{ route('intern.calendar.edit', $event->id) }}" class="text-white dark:text-white">
+                                        <div class="flex flex-col">
+                                            <span>{{ $event->title }}</span>
+                                            <span>{!! $event->eventDate() !!}</span>
+                                            <span>Beschreibung: {!! Str::limit($event->description, 255) !!}</span>
+                                        </div>
+                                    </a>
+                                </div>
                         @endforeach
                     </div>
 
                 </div>
-            @endif
+            @endif--}}
 
             <div class="rounded bg-gray-50 p-4 shadow-xl group dark:bg-gray-900 flex flex-col gap-4">
                 <div wire:ignore>
@@ -61,8 +64,10 @@
                 let calendarEl = document.getElementById('calendar');
                 let checkbox = document.getElementById('drop-remove');
                 let containerEl = document.getElementById('external-events');
-                let data = @this.events;
-                @this.on(`refreshCalendar`, () => {
+                let data = @this.
+                events;
+                @this.
+                on(`refreshCalendar`, () => {
                     calendar.refresh();
                 });
 
@@ -76,12 +81,12 @@
                     forceEventDuration: '18:00',
                     businessHours: [
                         {
-                            daysOfWeek: [1,2,3,4,5],
+                            daysOfWeek: [1, 2, 3, 4, 5],
                             startTime: '08:00',
                             endTime: '18:00',
                         },
                         {
-                            daysOfWeek: [0,6,],
+                            daysOfWeek: [0, 6,],
                             startTime: '09:00',
                             endTime: '18:00',
                         }
@@ -126,7 +131,8 @@
                         let eventAdd = {
                             start: date,
                         };
-                        @this.addevent(eventAdd);
+                        @this.
+                        addevent(eventAdd);
                     },
                     eventDrop: info => @this.eventDrop(info.event, info.oldEvent),
                     eventResize: info => @this.eventResize(info.event, info.oldEvent),

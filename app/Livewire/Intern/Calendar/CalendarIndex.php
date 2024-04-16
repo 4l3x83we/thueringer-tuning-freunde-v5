@@ -17,6 +17,8 @@ class CalendarIndex extends Component
 
     public $eventsAktuell;
 
+    public $eventsAktuellToday;
+
     public function getevent()
     {
         $events = Calendar::select('id', 'title', 'description', 'start', 'end')->get();
@@ -91,9 +93,12 @@ class CalendarIndex extends Component
             $event['borderColor'] = $event['event_border_color'];
             $event['textColor'] = $event['event_text_color'];
             $data[] = $event;
+            $this->eventsAktuellToday = $event;
         }
+        //        dd($data);
         $this->events = json_encode($data);
         $this->eventsAktuell = $data;
+
         metaTags('Hier kannst du alle Termine sehen.', 'images/logo.svg', 'Kalender', 'NOINDEX,NOFOLLOW');
 
         return view('livewire.intern.calendar.calendar-index');

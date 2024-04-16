@@ -16,7 +16,8 @@ class UeberUns extends Component
     public function mount()
     {
         $this->count = [
-            'team' => Team::where('published', true)->count(),
+            //'team' => Team::where('published', true)->count(),
+            'team' => Team::where('funktion', '', true)->count(),
             'fahrzeuge' => Fahrzeuge::where('published', true)->count(),
             'treffen' => Veranstaltungen::where('datum_von', '>=', Carbon::parse(now())->format('Y-m-d H:i:s'))->where('anwesend', true)->count(),
             'projekte' => Album::where('kategorie', 'Projekte')->count(),
