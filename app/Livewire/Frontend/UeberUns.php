@@ -17,14 +17,14 @@ class UeberUns extends Component
     {
         $this->count = [
             //'team' => Team::where('published', true)->count(),
-            'team' => Team::where('funktion', '!=', 'Werkstattmieter')->where('teams.published', true)->count(),
-            'fahrzeuge' => Fahrzeuge::where('published', true)->count(),
-            'treffen' => Veranstaltungen::where('datum_von', '>=', Carbon::parse(now())->format('Y-m-d H:i:s'))->where('anwesend', true)->count(),
-            'projekte' => Album::where('kategorie', 'Projekte')->count(),
+            'team' => (new Team)->where('funktion', '!=', 'Werkstattmieter')->where('teams.published', true)->count(),
+            'fahrzeuge' => (new Fahrzeuge)->where('published', true)->count(),
+            'treffen' => (new Veranstaltungen)->where('datum_von', '>=', Carbon::parse(now())->format('Y-m-d H:i:s'))->where('anwesend', true)->count(),
+            'projekte' => (new Album)->where('kategorie', 'Projekte')->count(),
         ];
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('livewire.frontend.ueber-uns');
     }
