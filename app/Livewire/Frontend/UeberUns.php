@@ -7,6 +7,9 @@ use App\Models\Frontend\Fahrzeuge\Fahrzeuge;
 use App\Models\Frontend\Team\Team;
 use App\Models\Frontend\Veranstaltungen\Veranstaltungen;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class UeberUns extends Component
@@ -24,7 +27,7 @@ class UeberUns extends Component
         ];
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function render(): Factory|\Illuminate\Foundation\Application|View|Application
     {
         return view('livewire.frontend.ueber-uns');
     }
